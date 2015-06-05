@@ -1,0 +1,20 @@
+- if @questions.empty?
+  b Еще нет вопросов
+- else
+  table border=99
+    tr
+      th Title:
+      th Создан:
+      th Изменен:
+      th Редактировать?
+      th Удалить?
+
+    - @questions.each do |ii|
+      tr
+        td = link_to ii.title, question_path(ii)
+        td = ii.created_at.strftime("%d-%m-%y")
+        td = ii.updated_at if ii.created_at != ii.updated_at
+        td = link_to " Edit? ", edit_question_path(ii)
+        td = link_to " Del? ", ii, method: :delete, data: {confirm: "Подтверждение удаления"}
+
+    = link_to "Задать вопрос", new_question_path

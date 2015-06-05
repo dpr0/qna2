@@ -1,0 +1,19 @@
+= link_to 'Все вопросы', questions_path
+h4 "title:"
+= @question.title
+h4 "body:"
+= @question.body
+h4 "created:" /  "updated:"
+= @question.created_at.strftime("%d-%m-%y") + " / " + @question.updated_at.strftime("%d-%m-%y")
+h4 "answers:"
+- @question.answers.each do |answer|
+  - if answer.persisted?
+    = answer.body
+br
+      = form_for [@question, Answer.new], method: :post do |f|
+        h4 Ответить:
+        .form-group
+          = f.label :body, "Напишите свой ответ"
+          = f.text_area :body, size: "90"
+        .form-group
+          = f.submit 'Добавить комментарий'

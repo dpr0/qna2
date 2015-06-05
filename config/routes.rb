@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
+  root 'questions#index'
   resources :questions do
-    resources :answers
+    resources :answers, only: [:create]
   end
-  resources :users
-
+  get 'questions/index'
+  get 'answers/index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

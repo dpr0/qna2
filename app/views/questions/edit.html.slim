@@ -1,0 +1,5 @@
+'Редактирование вопроса
+= form_for @question do |ff|
+  = ff.text_field :title
+  = ff.text_area :body
+  = ff.submit "Применить изменение"
