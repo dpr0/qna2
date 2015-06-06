@@ -1,13 +1,13 @@
 h1 Создание нового вопроса
 
-table = form_for @question do |ff|
+table = form_for @question do |f|
   tr
     th align="left" Заголовок
   tr
-    td = ff.text_field :title, size: "91"
+    td = f.text_field :title, size: "91"
   tr
     th align="left" Содержание
   tr
-    td = ff.text_area :body, size: "90"
+    td = f.text_area :body, size: "90"
   tr
-    td align="right" = ff.submit "Подать вопрос"
+    td align="right" = f.submit "Подать вопрос"
