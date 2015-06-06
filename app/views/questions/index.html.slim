@@ -7,13 +7,13 @@
       th Изменен:
       th Редактировать?
       th Удалить?
-    - for i in @questions do
+    - @questions.each do |question|
       tr
-        td = link_to i.title, question_path(i)
-        td = i.created_at.strftime("%d-%m-%y")
-        td = i.updated_at if i.created_at != i.updated_at
-        td = link_to " Edit? ", edit_question_path(i)
-        td = link_to " Del? ", i, method: :delete, data: {confirm: "Подтверждение удаления"}
+        td = link_to question.title, question_path(question)
+        td = question.created_at.strftime("%d-%m-%y")
+        td = question.updated_at if question.created_at != question.updated_at
+        td = link_to " Edit? ", edit_question_path(question)
+        td = link_to " Del? ", question, method: :delete, data: {confirm: "Подтверждение удаления"}
 
   = link_to "Задать вопрос", new_question_path
 - else
