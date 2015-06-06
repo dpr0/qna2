@@ -1,15 +1,13 @@
-- if @questions.empty?
-  b Еще нет вопросов
-- else
-  table border=99
+- unless @questions.empty?
+  b Список вопросов:
+  table border=1
     tr
       th Title:
       th Создан:
       th Изменен:
       th Редактировать?
       th Удалить?
-
-    - @questions.each do |ii|
+    - for ii in @questions do
       tr
         td = link_to ii.title, question_path(ii)
         td = ii.created_at.strftime("%d-%m-%y")
@@ -17,4 +15,6 @@
         td = link_to " Edit? ", edit_question_path(ii)
         td = link_to " Del? ", ii, method: :delete, data: {confirm: "Подтверждение удаления"}
 
-    = link_to "Задать вопрос", new_question_path
+  = link_to "Задать вопрос", new_question_path
+- else
+  h4 Еще нет вопросов

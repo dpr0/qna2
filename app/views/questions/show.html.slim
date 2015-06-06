@@ -1,19 +1,29 @@
-= link_to 'Все вопросы', questions_path
-h4 "title:"
-= @question.title
-h4 "body:"
-= @question.body
-h4 "created:" /  "updated:"
-= @question.created_at.strftime("%d-%m-%y") + " / " + @question.updated_at.strftime("%d-%m-%y")
-h4 "answers:"
-- @question.answers.each do |answer|
-  - if answer.persisted?
-    = answer.body
-br
-      = form_for [@question, Answer.new], method: :post do |f|
-        h4 Ответить:
-        .form-group
-          = f.label :body, "Напишите свой ответ"
-          = f.text_area :body, size: "90"
-        .form-group
-          = f.submit 'Добавить комментарий'
+h1 = link_to 'Все вопросы', questions_path
+table = form_for [@question, Answer.new], method: :post do |f|
+  tr
+    th
+    td = link_to "Редактировать вопрос?", edit_question_path
+  tr
+    th align="left" Заголовок:
+    td = @question.title
+  tr
+    th align="left" Содержание:
+    td = @question.body
+  tr
+    th align="left" Создан:
+    td = @question.created_at.strftime("%d-%m-%y")
+  tr
+    th align="left" Изменен:
+    td = @question.updated_at.strftime("%d-%m-%y")
+  tr
+    th align="left" valign="top" Ответы:
+    td
+      - @question.answers.each do |answer|
+        li = answer.body if answer.persisted?
+  tr
+    th align="left" Ответить?
+    td = f.text_area :body, size: "90"
+  tr
+    th
+    td align="right" = f.submit 'Ответить'
+
