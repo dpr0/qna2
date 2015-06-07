@@ -1,3 +1,4 @@
+p= link_to 'Ask question', new_question_path
 - unless @questions.empty?
   b Список вопросов:
   table border=1
@@ -14,7 +15,5 @@
         td = question.updated_at if question.created_at != question.updated_at
         td = link_to " Edit? ", edit_question_path(question)
         td = link_to " Del? ", question, method: :delete, data: {confirm: "Подтверждение удаления"}
-
-  = link_to "Задать вопрос", new_question_path
 - else
   h4 Еще нет вопросов
