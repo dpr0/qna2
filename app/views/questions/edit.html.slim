@@ -1,12 +1,5 @@
 h1 Редактирование вопроса
-table = form_for @question do |f|
-  tr
-    th align="left" Заголовок
-  tr
-    td = f.text_field :title, size: "91"
-  tr
-    th align="left" Содержание
-  tr
-    td = f.text_area :body, size: "90"
-  tr
-    td align="right" = f.submit "Применить изменение"
+= form_for @question do |f|
+  = f.text_field :title, size: "91"
+  = f.text_area :body, size: "90"
+  = f.submit "Применить изменение"

@@ -1,11 +1,12 @@
 require 'rails_helper'
 
-feature "Create question", %q{
+feature 'Create question', '
   In order to get answer from community
   As an authenticated user
   I want to be able to ask questions
-} do
-  given(:user) {create(:user)}
+
+' do
+  given(:user) { create(:user) }
 
   scenario 'Authenticated user creates question' do
     sign_in(user)
@@ -15,7 +16,7 @@ feature "Create question", %q{
     fill_in 'Title', with: 'Text question'
     fill_in 'Body', with: 'text text'
     click_on 'Подать вопрос'
-    #save_and_open_page
+    # save_and_open_page
     expect(page).to have_content 'Редактировать вопрос?'
   end
 
@@ -25,5 +26,4 @@ feature "Create question", %q{
 
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end
-
 end

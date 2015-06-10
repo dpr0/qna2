@@ -18,17 +18,24 @@ class QuestionsController < ApplicationController
 
   def create
     @question = Question.new(question_params)
+    @user = current_user
+    # @question.user_id = @user.id
+    @question = @user.questions.new(question_params)
     if @question.save
+      flash[:notice] = 'Ok!'
       redirect_to @question
     else
+      flash[:notice] = 'Error!'
       render :new
     end
   end
 
   def update
     if @question.update(question_params)
+      flash[:notice] = 'Ok!'
       redirect_to @question
     else
+      flash[:notice] = 'Error!'
       render :edit
     end
   end

@@ -1,14 +1,7 @@
-table = form_for @question do |f|
-  tr
-    th
-    td align="center"
-      h1 Создание нового вопроса
-  tr
-    th align="left" = f.label :title
-    td = f.text_field :title, size: 61
-  tr
-    th align="left"  valign="top" = f.label :body
-    td = f.text_area :body, rows: 5, cols: 60
-  tr
-    th
-    td align="right" = f.submit "Подать вопрос"
+= form_for @question do |f|
+  = f.label :title
+  = f.text_field :title, size: 61
+  br
+  = f.label :body
+  = f.text_area :body, rows: 5, cols: 60
+  = f.submit "Подать вопрос"

@@ -1,16 +1,17 @@
 require 'rails_helper'
 
-feature "user sign in", %q{
+feature 'user sign in', '
   In order to be able to ask
   As an user
   I want to be able to sign in
-} do
-  given(:user) {create(:user)}
+
+' do
+  given(:user) { create(:user) }
 
   scenario 'Registered user try to sign in' do
     sign_in(user)
 
-    #save_and_open_page
+    # save_and_open_page
     expect(page).to have_content 'Signed in successfully.'
     expect(current_path).to eq root_path
   end
@@ -23,7 +24,5 @@ feature "user sign in", %q{
 
     expect(page).to have_content 'Invalid email or password.'
     expect(current_path).to eq new_user_session_path
-
   end
-
 end
