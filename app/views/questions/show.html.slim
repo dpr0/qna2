@@ -1,13 +1,18 @@
-h1 = link_to 'Все вопросы', questions_path
-= form_for [@question, Answer.new], method: :post do |f|
-  br = link_to "Редактировать вопрос?", edit_question_path
-  br = @question.title
-  = @question.body
-  br = @question.created_at.strftime("%d-%m-%y")
-  = @question.updated_at.strftime("%d-%m-%y")
-  br
+  p= @question.user_id
+  p= @question.title
+  p= @question.body
+  p= @question.created_at.strftime("%d-%m-%y") + " / " + @question.updated_at.strftime("%d-%m-%y")
+  p= link_to " Del? ", @question, method: :delete, data: {confirm: "Подтверждение удаления"}
+  p= link_to "Редактировать вопрос?", edit_question_path
+
   - @question.answers.each do |answer|
-    = answer.user_id
-    li = answer.body
-  br = f.text_area :body, size: "90"
-  br = f.submit 'Ответить'
+    p= answer.user_id
+    p= answer.body
+    - if current_user && answer.user_id == current_user.id
+      = link_to 'Del answer?', answer_path(answer), method: :delete
+
+  = form_for [@question, Answer.new], method: :post do |f|
+
+    = f.label :body
+    br = f.text_area :body, size: "90"
+    br = f.submit 'Ответить'

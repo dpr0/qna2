@@ -41,8 +41,14 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    @question.destroy
-    redirect_to questions_path
+    if @question.user_id == current_user.id
+      @question.destroy
+      flash[:notice] = 'Question delete!'
+      redirect_to questions_path
+    else
+      flash[:notice] = 'not your question'
+      render :show
+    end
   end
 
   private

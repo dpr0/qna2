@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   let(:user) { create(:user) }
-  let(:question) { create(:question) }
+  let(:question) { create(:question, user: user) }
   describe 'GET #index' do
     let(:questions) { create_list(:question, 2) }
     before { get :index }
@@ -103,12 +103,12 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'DELETE #destroy' do
     sign_in_user
-    before { question }
+    let!(:question1) { create(:question, user: subject.current_user) }
     it 'deletes question' do
-      expect { delete :destroy, id: question }.to change(Question, :count).by(-1)
+      expect{ delete :destroy, id: question1 }.to change(Question, :count).by(-1)
     end
     it 'redirect to index view' do
-      delete :destroy, id: question
+      delete :destroy, id: question1
       expect(response).to redirect_to questions_path
     end
   end
