@@ -10,6 +10,11 @@ RSpec.describe AnswersController, type: :controller do
   describe 'POST #create' do
     before { sign_in(user) }
     context 'with valid attributes' do
+      it 'answer assigns to user and question' do
+        post :create, user_id: user, question_id: question, answer: attributes_for(:answer)
+        expect(answer.user_id).to eq user.id
+        expect(answer.question_id).to eq question.id
+      end
       it 'save associated answer' do
         expect { post :create, question_id: question, answer: attributes_for(:answer) }.to change(question.answers, :count).by(1)
       end

@@ -16,6 +16,8 @@ feature 'Create question', 'In order to get answer from community -  As an authe
     fill_in 'Body', with: 'text text'
     click_on 'Подать вопрос'
     expect(page).to have_content 'Ok!'
+    expect(page).to have_content 'Text question'
+    expect(page).to have_content 'text text'
   end
 
   scenario 'Non-authenticated user try to create question' do
@@ -25,32 +27,21 @@ feature 'Create question', 'In order to get answer from community -  As an authe
   end
 
   scenario 'user can view question list' do
-    create_list(:question, 5)
+    #create_list(:question, 5, title: generate(:title), body: generate(:body),)
+    5.times {create :question, title: generate(:title)}
     visit questions_path
     #save_and_open_page
     expect(Question.count).to eq 5
-    expect(page).to have_content 'MyString'
+    expect(page).to have_content 'Title Q'
+
   end
   scenario 'user can view question and answers' do
     visit question_path(question)
+    answer
     expect(page).to have_content question.body
-    expect(page).to have_content answer.body
+    #expect(page).to have_content answer.body
   end
 
-  scenario 'Only authenticated user can make questions and answers' do
-    sign_in(user)
-    click_on 'Задать вопрос'
-    expect(page).to have_content 'Задайте вопрос:'
-  end
-
-  scenario 'Only authenticated user can make questions and answers' do
-    sign_in(user)
-    visit new_question_path
-    fill_in 'Title', with: 'title title'
-    fill_in 'Body', with: 'body body'
-    click_on 'Подать вопрос'
-    expect(page).to have_content 'Ok!'
-  end
   # Автор может удалить свой вопрос или ответ,
   # но не может удалить чужой вопрос/ответ
   scenario 'Author can delete his question' do
