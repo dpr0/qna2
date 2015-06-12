@@ -1,9 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  let(:user)     { create(:user) }
-  let(:question) { create(:question, user: user) }
-  let(:answer)   { create(:answer, user: user, question: question) }
+  let(:user)      { create(:user) }
+  let(:user2)     { create(:user) }
+  let(:question)  { create(:question, user: user) }
+  let(:answer)    { create(:answer, user: user, question: question) }
+  let(:answer2)   { create(:answer, user: user2, question: question) }
 
   describe 'POST #create' do
     before { sign_in(user) }
@@ -26,5 +28,22 @@ RSpec.describe AnswersController, type: :controller do
         expect(response).to render_template 'questions/show'
       end
     end
+
+  describe 'DELETE #destroy' do
+# созданный ответ связывается с залогиненным пользователем?
+# Пользователя из контроллера: subject.current_user
+      #before { question }
+      before { answer }
+      it 'deletes answer' do
+        sign_in(user)
+        expect{ delete :destroy, id: answer.id }.to change(question.answers, :count).by(-1)
+      end
+      # Нужен тест на то, что пользователь не может удалить чужой ответ
+      it 'user cant delete another user answer' do
+        sign_in(user2)
+        expect{ delete :destroy, id: answer.id }.to_not change(question.answers, :count)
+      end
+    end
   end
 end
+

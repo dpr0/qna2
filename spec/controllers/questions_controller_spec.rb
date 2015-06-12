@@ -2,7 +2,9 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   let(:user) { create(:user) }
+  let(:user2) { create(:user) }
   let(:question) { create(:question, user: user) }
+  let(:question2) { create(:question, user: user2) }
   describe 'GET #index' do
     let(:questions) { create_list(:question, 2) }
     before { get :index }
@@ -110,6 +112,11 @@ RSpec.describe QuestionsController, type: :controller do
     it 'redirect to index view' do
       delete :destroy, id: question1
       expect(response).to redirect_to questions_path
+    end
+    # Нужен тест на то, что пользователь не может удалить чужой вопрос
+    it 'user cant delete another user question' do
+      question2
+      expect{ delete :destroy, id: question2 }.to_not change(Question, :count)
     end
   end
 end

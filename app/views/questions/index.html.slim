@@ -3,6 +3,7 @@ p= link_to 'Ask question', new_question_path
   b Список вопросов:
   table border=1
     tr
+      th User:
       th Title:
       th Создан:
       th Изменен:
@@ -10,10 +11,12 @@ p= link_to 'Ask question', new_question_path
       th Удалить?
     - @questions.each do |question|
       tr
+        td = question.user_id
         td = link_to question.title, question_path(question)
         td = question.created_at.strftime("%d-%m-%y")
         td = question.updated_at if question.created_at != question.updated_at
-        td = link_to " Edit? ", edit_question_path(question)
-        td = link_to " Del? ", question, method: :delete, data: {confirm: "Подтверждение удаления"}
+        - if current_user && question.user_id == current_user.id
+          td = link_to " Edit? ", edit_question_path(question)
+          td = link_to " Del? ", question, method: :delete, data: {confirm: "Подтверждение удаления"}
 - else
   h4 Еще нет вопросов

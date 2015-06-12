@@ -1,18 +1,18 @@
-  p= @question.user_id
-  p= @question.title
-  p= @question.body
-  p= @question.created_at.strftime("%d-%m-%y") + " / " + @question.updated_at.strftime("%d-%m-%y")
-  p= link_to " Del? ", @question, method: :delete, data: {confirm: "Подтверждение удаления"}
-  p= link_to "Редактировать вопрос?", edit_question_path
+h5= @question.user_id
+h5= @question.title
+h5= @question.body
+h5= @question.created_at.strftime("%d-%m-%y") + " / " + @question.updated_at.strftime("%d-%m-%y")
+- if current_user && @question.user_id == current_user.id
+  = link_to "Del?", @question, method: :delete, data: {confirm: "Подтверждение удаления"}
+  = link_to "Редактировать вопрос?", edit_question_path
 
-  - @question.answers.each do |answer|
-    p= answer.user_id
-    p= answer.body
-    - if current_user && answer.user_id == current_user.id
-      = link_to 'Del answer?', answer_path(answer), method: :delete
+- @question.answers.each do |answer|
+  p= answer.user_id
+  p= answer.body
+  - if current_user && answer.user_id == current_user.id
+    = link_to 'Del answer?', answer_path(answer), method: :delete
 
-  = form_for [@question, Answer.new], method: :post do |f|
-
-    = f.label :body
-    br = f.text_area :body, size: "90"
-    br = f.submit 'Ответить'
+= form_for [@question, Answer.new], method: :post do |f|
+  = f.label :body
+  br = f.text_area :body, size: "90"
+  br = f.submit 'Ответить'

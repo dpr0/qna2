@@ -1,5 +1,4 @@
 h1 Редактирование вопроса
 = form_for @question do |f|
-  = f.text_field :title, size: "91"
-  = f.text_area :body, size: "90"
+  = render partial: "form", locals: { f: f }
   = f.submit "Применить изменение"

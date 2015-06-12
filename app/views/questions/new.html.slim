@@ -1,8 +1,3 @@
-p Задайте вопрос:
+h1 Задайте вопрос:
 = form_for @question do |f|
-  = f.label :title
-  = f.text_field :title, size: 61
-  br
-  = f.label :body
-  = f.text_area :body, rows: 5, cols: 60
-  = f.submit "Подать вопрос"
+  = render partial: "form", locals: { f: f }

@@ -18,9 +18,8 @@ class QuestionsController < ApplicationController
 
   def create
     @question = Question.new(question_params)
-    @user = current_user
     # @question.user_id = @user.id
-    @question = @user.questions.new(question_params)
+    @question = current_user.questions.new(question_params)
     if @question.save
       flash[:notice] = 'Ok!'
       redirect_to @question

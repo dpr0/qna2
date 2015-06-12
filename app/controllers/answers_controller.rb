@@ -3,11 +3,11 @@ class AnswersController < ApplicationController
   def create
     @question = Question.find(params[:question_id])
     @answer = @question.answers.new(answer_params)
-    @answer.user_id = current_user.id
+    @answer.user = current_user
 
     if @answer.save
       flash[:notice] = 'Ответ принят.'
-      redirect_to question_path(@question)
+      redirect_to @question
     else
       flash[:notice] = 'Error!'
       render 'questions/show'
@@ -22,7 +22,7 @@ class AnswersController < ApplicationController
       redirect_to @answer.question
     else
       flash[:notice] = 'not your answer'
-      redirect_to question_path(@question)
+      redirect_to @answer.question
     end
   end
 
