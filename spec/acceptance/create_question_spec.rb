@@ -27,19 +27,22 @@ feature 'Create question', 'In order to get answer from community -  As an authe
   end
 
   scenario 'user can view question list' do
-    #create_list(:question, 5, title: generate(:title), body: generate(:body),)
-    5.times {create :question, title: generate(:title)}
+    5.times { create :question, title: generate(:title) }
     visit questions_path
-    #save_and_open_page
+    # save_and_open_page
     expect(Question.count).to eq 5
-    expect(page).to have_content 'Title Q'
-
+    #expect(page).to have_content "Title Q#{пока не знаю как вставить регулярку для этой сиквенции}"
+    expect(page).to have_content "Title Q1"
+    expect(page).to have_content "Title Q2"
+    expect(page).to have_content "Title Q3"
+    expect(page).to have_content "Title Q4"
+    expect(page).to have_content "Title Q5"
   end
   scenario 'user can view question and answers' do
     visit question_path(question)
     answer
     expect(page).to have_content question.body
-    #expect(page).to have_content answer.body
+    expect(page).to have_content answer.body
   end
 
   # Автор может удалить свой вопрос или ответ,

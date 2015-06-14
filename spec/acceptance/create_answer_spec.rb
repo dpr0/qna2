@@ -13,7 +13,7 @@ feature 'Create answer' do
     visit question_path(question)
     fill_in 'Body', with: 'text text'
     click_on 'Ответить'
-    #expect(page).to have_content 'Ответ принят.'
+    # expect(page).to have_content 'Ответ принят.'
     expect(page).to have_content 'text text'
   end
   scenario 'Author can delete his answer' do
@@ -28,6 +28,4 @@ feature 'Create answer' do
     visit question_path(question2)
     expect(page).to_not have_content 'Del answer?'
   end
-
-
 end

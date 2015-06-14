@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 feature 'user sign in', 'In order to be able to ask - As an user - I want to be able to sign in' do
-
   given(:user) { create(:user) }
   scenario 'Registered user try to sign in' do
     sign_in(user)
@@ -30,5 +29,4 @@ feature 'user sign in', 'In order to be able to ask - As an user - I want to be 
     click_on 'Регистрация'
     expect(current_path).to eq new_user_registration_path
   end
-
 end

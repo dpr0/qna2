@@ -52,8 +52,8 @@ RSpec.describe QuestionsController, type: :controller do
     sign_in_user
     context 'with valid attributes' do
       it 'question assigns to user' do
-        post :create, user_id: user, question: attributes_for(:question)
-        expect(question.user_id).to eq user.id
+        post :create, question: attributes_for(:question)
+        expect(assigns(:question).user_id).to eq subject.current_user.id
       end
       it 'redirects to show view' do
         post :create, question: attributes_for(:question)
@@ -108,7 +108,7 @@ RSpec.describe QuestionsController, type: :controller do
     sign_in_user
     let!(:question1) { create(:question, user: subject.current_user) }
     it 'deletes question' do
-      expect{ delete :destroy, id: question1 }.to change(Question, :count).by(-1)
+      expect { delete :destroy, id: question1 }.to change(Question, :count).by(-1)
     end
     it 'redirect to index view' do
       delete :destroy, id: question1
@@ -117,7 +117,7 @@ RSpec.describe QuestionsController, type: :controller do
     # Нужен тест на то, что пользователь не может удалить чужой вопрос
     it 'user cant delete another user question' do
       question2
-      expect{ delete :destroy, id: question2 }.to_not change(Question, :count)
+      expect { delete :destroy, id: question2 }.to_not change(Question, :count)
     end
   end
 end

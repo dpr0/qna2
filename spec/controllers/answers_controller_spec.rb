@@ -34,21 +34,20 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
 
-  describe 'DELETE #destroy' do
-# созданный ответ связывается с залогиненным пользователем?
-# Пользователя из контроллера: subject.current_user
-      #before { question }
+    describe 'DELETE #destroy' do
+      # созданный ответ связывается с залогиненным пользователем?
+      # Пользователя из контроллера: subject.current_user
+      # before { question }
       before { answer }
       it 'deletes answer' do
         sign_in(user)
-        expect{ delete :destroy, id: answer.id }.to change(question.answers, :count).by(-1)
+        expect { delete :destroy, id: answer.id }.to change(question.answers, :count).by(-1)
       end
       # Нужен тест на то, что пользователь не может удалить чужой ответ
       it 'user cant delete another user answer' do
         sign_in(user2)
-        expect{ delete :destroy, id: answer.id }.to_not change(question.answers, :count)
+        expect { delete :destroy, id: answer.id }.to_not change(question.answers, :count)
       end
     end
   end
 end
-
