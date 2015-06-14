@@ -31,12 +31,7 @@ feature 'Create question', 'In order to get answer from community -  As an authe
     visit questions_path
     # save_and_open_page
     expect(Question.count).to eq 5
-    #expect(page).to have_content "Title Q#{пока не знаю как вставить регулярку для этой сиквенции}"
-    expect(page).to have_content "Title Q1"
-    expect(page).to have_content "Title Q2"
-    expect(page).to have_content "Title Q3"
-    expect(page).to have_content "Title Q4"
-    expect(page).to have_content "Title Q5"
+    expect(page).to have_content(/Title\sQ\d/, count: 5)
   end
   scenario 'user can view question and answers' do
     visit question_path(question)
