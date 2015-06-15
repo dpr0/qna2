@@ -7,6 +7,7 @@ feature 'Create question', 'In order to get answer from community -  As an authe
   given(:question2) { create(:question, user: user2) }
   given(:answer) { create(:answer, user: user, question: question) }
   given(:answer2) { create(:answer, user: user2, question: question2) }
+  given(:questions) { create_list(:question, 5) }
 
   scenario 'Authenticated user creates question' do
     sign_in(user)
@@ -27,11 +28,13 @@ feature 'Create question', 'In order to get answer from community -  As an authe
   end
 
   scenario 'user can view question list' do
-    5.times { create :question, title: generate(:title) }
+    # 5.times { create :question, title: generate(:title) }
+    questions
     visit questions_path
     # save_and_open_page
-    expect(Question.count).to eq 5
-    expect(page).to have_content(/Title\sQ\d/, count: 5)
+    # expect(Question.count).to eq 5
+    # expect(page).to have_content(/Title\sQ\d/, count: 5)
+    questions.each { |q| expect(page).to have_content q.title }
   end
   scenario 'user can view question and answers' do
     visit question_path(question)

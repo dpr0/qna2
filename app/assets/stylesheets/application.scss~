@@ -12,8 +12,9 @@
  *
  *= require_tree .
  *= require_self
+ *= require dataTables/jquery.dataTables
+ *= require dataTables/jquery.dataTables.bootstrap3
  *= require jquery.dataTables
- *= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
  */
 
 $navbar-default-bg: #312312;
@@ -22,6 +23,11 @@ $navbar-default-color: $light-orange;
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
-@import "jquery-ui";
 
 input[typy=submit] { @extend .btn; @extend .btn-success; }
+
+/*= require jquery.ui
+/*= require jquery.ui.all
+/*= require jquery.ui.core
+/*= require jquery.ui.theme
+/*= require dataTables/src/demo_table_jui*/
