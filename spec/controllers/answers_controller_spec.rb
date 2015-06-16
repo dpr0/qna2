@@ -12,8 +12,8 @@ RSpec.describe AnswersController, type: :controller do
     context 'with valid attributes' do
       it 'answer assigns to user and question' do
         post :create, user_id: user, question_id: question, answer: attributes_for(:answer)
-        #expect(answer.user_id).to eq user.id
-        #expect(answer.question_id).to eq question.id
+        # expect(answer.user_id).to eq user.id
+        # expect(answer.question_id).to eq question.id
         expect(assigns(:answer).user_id).to eq subject.current_user.id
       end
       it 'save associated answer' do
