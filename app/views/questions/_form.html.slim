@@ -1,6 +1,7 @@
-i= f.label :title
-= f.text_field :title, size: 61
-br
-i= f.label :body
-= f.text_area :body, rows: 5, cols: 60
-br= f.submit "Подать вопрос"
+= form_for @question do |f|
+  i= f.label :title
+  = f.text_field :title, size: 61
+  br
+  i= f.label :body
+  = f.text_area :body, rows: 5, cols: 60
+  br= f.submit "Подать вопрос"
