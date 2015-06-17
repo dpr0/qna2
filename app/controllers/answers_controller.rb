@@ -1,17 +1,22 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
+  before_action :load_question, only: [:create]
   def create
-    @question = Question.find(params[:question_id])
+    #@answer = @question.answers.build(answer_params)
+    #@answer = @question.answers.create(answer_params)
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
-
-    if @answer.save
-      flash[:notice] = 'Ответ принят.'
-      redirect_to @question
-    else
-      flash[:notice] = 'Error!'
-      render 'questions/show'
-    end
+    @answer.save
+    #if @answer.save
+    #  flash[:notice] = 'Ответ принят.'
+      #redirect_to @question
+      #redirect_to question_path(@answer.question)
+      #render 'questions/show'
+    #else
+    #  flash[:notice] = 'Error!'
+    #  render 'questions/show'
+    #end
+    #@question
   end
 
   def destroy
@@ -27,6 +32,10 @@ class AnswersController < ApplicationController
   end
 
   private
+
+  def load_question
+    @question = Question.find(params[:question_id])
+  end
 
   def answer_params
     params.require(:answer).permit(:body)

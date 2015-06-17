@@ -28,6 +28,8 @@ group :development, :test do
   gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger'
   gem 'pry'
   gem 'better_errors'
+  gem 'selenium-webdriver'
+  gem 'database_cleaner'
 end
 group :test do
   gem 'shoulda-matchers'

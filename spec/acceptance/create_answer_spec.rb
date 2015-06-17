@@ -1,17 +1,30 @@
 require 'rails_helper'
 
-feature 'Create answer' do
+feature 'User answer', %q{ In order to exchange my knowledge - As an authenticated user - I want to be able to create answers } do
   given(:user) { create(:user) }
   given(:user2) { create(:user) }
-  given(:question) { create(:question, user: user) }
+  given!(:question) { create(:question, user: user) }
   given(:question2) { create(:question, user: user2) }
   given(:answer) { create(:answer, user: user, question: question) }
   given(:answer2) { create(:answer, user: user2, question: question2) }
 
+  scenario 'Authenticated user create answer', js: true do
+    sign_in(user)
+    visit question_path(question)
+
+    fill_in 'Your answer', with: 'text text'
+    click_on 'Ответить'
+
+    expect(current_path).to eq question_path(question)
+    within '.answers' do
+      expect(page).to have_content 'text text'
+    end
+  end
+
   scenario 'Authenticated user can create answer on the question' do
     sign_in(user)
     visit question_path(question)
-    fill_in 'Body', with: 'text text'
+    fill_in 'Your answer', with: 'text text'
     click_on 'Ответить'
     # expect(page).to have_content 'Ответ принят.'
     expect(page).to have_content 'text text'

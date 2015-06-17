@@ -6,13 +6,10 @@ h5= @question.created_at.strftime("%d-%m-%y") + " / " + @question.updated_at.str
   = link_to "Del?", @question, method: :delete, data: {confirm: "Подтверждение удаления"}
   = link_to "Редактировать вопрос?", edit_question_path
 
-- @question.answers.each do |answer|
-  p= answer.user_id
-  p= answer.body
-  - if current_user && answer.user_id == current_user.id
-    = link_to 'Del answer?', answer_path(answer), method: :delete
+.answers
+  = render 'answers'
 
-= form_for [@question, Answer.new], method: :post do |f|
-  = f.label :body
+= form_for [@question, Answer.new], remote: true do |f|
+  = f.label :body, 'Your answer'
   br = f.text_area :body, size: "90"
   br = f.submit 'Ответить'
