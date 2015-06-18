@@ -7,7 +7,8 @@ h5= @question.created_at.strftime("%d-%m-%y") + " / " + @question.updated_at.str
   = link_to "Редактировать вопрос?", edit_question_path
 
 .answers
-  = render 'answers'
+  - @question.answers.each do |answer|
+    = render partial: 'answer', locals: {answer: answer}
 
 = form_for [@question, Answer.new], remote: true do |f|
   = f.label :body, 'Your answer'

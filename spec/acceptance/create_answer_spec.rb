@@ -13,8 +13,10 @@ feature 'User answer', %q{ In order to exchange my knowledge - As an authenticat
     visit question_path(question)
 
     fill_in 'Your answer', with: 'text text'
+    pp current_path
     click_on 'Ответить'
-
+    pp current_path
+    visit question_path(question)
     expect(current_path).to eq question_path(question)
     within '.answers' do
       expect(page).to have_content 'text text'

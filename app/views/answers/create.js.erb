@@ -1,2 +1,2 @@
-$('.answers').html('<%= j render 'questions/answers' %>');
+$('.answers').html('<%= j render 'questions/answer', locals: {answer: @answer} %>');
 $('#answer_body').val('');
