@@ -8,6 +8,19 @@ feature 'User answer', %q{ In order to exchange my knowledge - As an authenticat
   given(:answer) { create(:answer, user: user, question: question) }
   given(:answer2) { create(:answer, user: user2, question: question2) }
 
+  scenario '1 question & 1 answer, +1 answer', js: true do
+    question
+    answer # 'MyText'
+    sign_in(user)
+    visit question_path(question)
+    fill_in 'Your answer', with: 'text text'
+    click_on 'Ответить'
+    visit question_path(question)
+    #expect(current_path).to eq question_path(question)
+    expect(page).to have_content 'MyText'
+    expect(page).to have_content 'text text'
+  end
+
   scenario 'Authenticated user create answer', js: true do
     sign_in(user)
     visit question_path(question)
