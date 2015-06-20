@@ -8,7 +8,7 @@ h5= @question.created_at.strftime("%d-%m-%y") + " / " + @question.updated_at.str
 
 .answers
   - @question.answers.each do |answer|
-    = render partial: 'answer', locals: {answer: answer}
+    = render partial: 'questions/answer', locals: {answer: answer}
 
 = form_for [@question, Answer.new], remote: true do |f|
   = f.label :body, 'Your answer'

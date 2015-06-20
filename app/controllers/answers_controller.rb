@@ -2,8 +2,6 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :load_question, only: [:create]
   def create
-    #@answer = @question.answers.build(answer_params)
-    #@answer = @question.answers.create(answer_params)
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
     @answer.save
