@@ -1,16 +1,33 @@
-h5= @question.user_id
-h5= @question.title
-h5= @question.body
-h5= @question.created_at.strftime("%d-%m-%y") + " / " + @question.updated_at.strftime("%d-%m-%y")
+font color="green" Количество ответов: &nbsp
+= @question.answers.count
+br
+font color="green" ID пользователя создавшего вопрос: &nbsp
+= @question.user_id
+br
+font color="green" Создан/изменен: &nbsp
+= @question.created_at.strftime("%d-%m-%y") + " / " + @question.updated_at.strftime("%d-%m-%y")
+br
+br
+font color="blue" ID вопроса: &nbsp
+= @question.id
+|&nbsp;
 - if current_user && @question.user_id == current_user.id
-  = link_to "Del?", @question, method: :delete, data: {confirm: "Подтверждение удаления"}
   = link_to "Редактировать вопрос?", edit_question_path
-
+  |&nbsp;
+  = link_to "Del?", @question, method: :delete, data: {confirm: "Подтверждение удаления"}
+br
+font color="blue" Заголовок: &nbsp
+= @question.title
+|&nbsp;
+font color="blue" Содержание: &nbsp
+= @question.body
+br
+br
 .answers
-  - @question.answers.each do |answer|
-    = render partial: 'questions/answer', locals: {answer: answer}
+  = render @question.answers
 
 = form_for [@question, Answer.new], remote: true do |f|
   = f.label :body, 'Your answer'
   br = f.text_area :body, size: "90"
-  br = f.submit 'Ответить'
+  .answer-errors
+  = f.submit 'Ответить'

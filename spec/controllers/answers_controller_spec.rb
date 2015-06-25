@@ -3,9 +3,32 @@ require 'rails_helper'
 RSpec.describe AnswersController, type: :controller do
   let(:user)      { create(:user) }
   let(:user2)     { create(:user) }
-  let(:question)  { create(:question, user: user) }
+  let!(:question) { create(:question, user: user) }
   let(:answer)    { create(:answer, user: user, question: question) }
   let(:answer2)   { create(:answer, user: user2, question: question) }
+
+  describe 'PATCH #update' do
+    sign_in_user
+    it 'assings the requested answer to @answer' do
+      patch :update, id: answer, answer: attributes_for(:answer), format: :js
+      expect(assigns(:answer)).to eq answer
+    end
+    it 'assigns the question' do
+      patch :update, id: answer, answer: attributes_for(:answer), format: :js
+      expect(assigns(:question)).to eq question
+    end
+
+    it 'changes answer attributes' do
+      patch :update, id: answer, answer: { body: 'new body' }, format: :js
+      answer.reload
+      expect(answer.body).to eq 'new body'
+    end
+    it 'render update template' do
+      patch :update, id: answer, answer: attributes_for(:answer), format: :js
+      expect(response).to render_template :update
+    end
+
+  end
 
   describe 'POST #create' do
     before { sign_in(user) }
@@ -39,12 +62,12 @@ RSpec.describe AnswersController, type: :controller do
       before { answer }
       it 'deletes answer' do
         sign_in(user)
-        expect { delete :destroy, id: answer.id }.to change(question.answers, :count).by(-1)
+        expect { delete :destroy, id: answer, format: :js }.to change(question.answers, :count).by(-1)
       end
       # Нужен тест на то, что пользователь не может удалить чужой ответ
       it 'user cant delete another user answer' do
         sign_in(user2)
-        expect { delete :destroy, id: answer.id }.to_not change(question.answers, :count)
+        expect { delete :destroy, id: answer.id, format: :js }.to_not change(question.answers, :count)
       end
     end
   end

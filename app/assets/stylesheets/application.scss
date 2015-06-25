@@ -10,11 +10,11 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_tree .
  *= require_self
  *= require jquery.dataTables
- *= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
+ *= require_tree .
  */
+
 
 $navbar-default-bg: #312312;
 $light-orange: #ff8c00;
@@ -24,4 +24,4 @@ $navbar-default-color: $light-orange;
 @import "bootstrap";
 @import "jquery-ui";
 
-input[typy=submit] { @extend .btn; @extend .btn-success; }
+input[type=submit] { @extend .btn; @extend .btn-success; }

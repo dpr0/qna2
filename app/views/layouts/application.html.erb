@@ -7,18 +7,17 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<% if current_user %>
-    <%= link_to "Главная", questions_path %> |
-    <%= link_to "Задать вопрос", new_question_path %> |
-    <%= current_user.email %> |
-    <%= link_to "Выйти", destroy_user_session_path, method: :delete %>
-<% else %>
-    <%= link_to "Войти", new_user_session_path %> |
-    <%= link_to "Регистрация", new_user_registration_path %>
-<% end %>
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
+    <% if current_user %>
+        <%= link_to "Главная", questions_path %> |
+        <%= link_to "Задать вопрос", new_question_path %> |
+        <%= current_user.email %> |
+        <%= link_to "Выйти", destroy_user_session_path, method: :delete %>
+    <% else %>
+        <%= link_to "Войти", new_user_session_path %> |
+        <%= link_to "Регистрация", new_user_registration_path %> |
+    <% end %>
+<div class="alert alert-success" role="alert"><%= notice %></div>
+<div class="alert alert-danger" role="alert"><%= alert %></div>
 <%= yield %>
-
 </body>
 </html>

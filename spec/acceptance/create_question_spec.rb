@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative 'acceptance_helper'
 
 feature 'Create question', 'In order to get answer from community -  As an authenticated user - I want to be able to ask questions' do
   given(:user) { create(:user) }
@@ -37,8 +37,8 @@ feature 'Create question', 'In order to get answer from community -  As an authe
     questions.each { |q| expect(page).to have_content q.title }
   end
   scenario 'user can view question and answers' do
-    visit question_path(question)
     answer
+    visit question_path(question)
     expect(page).to have_content question.body
     expect(page).to have_content answer.body
   end

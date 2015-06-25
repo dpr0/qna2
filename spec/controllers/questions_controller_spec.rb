@@ -23,13 +23,11 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     it 'assigns new answer for question' do
-
     end
 
     it 'renders show view' do
       expect(response).to render_template :show
     end
-
   end
 
   describe 'GET #new' do

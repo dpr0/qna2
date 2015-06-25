@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative 'acceptance_helper'
 
 feature 'user sign in', 'In order to be able to ask - As an user - I want to be able to sign in' do
   given(:user) { create(:user) }
