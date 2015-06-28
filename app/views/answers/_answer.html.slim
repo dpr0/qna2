@@ -1,18 +1,17 @@
 - if answer.persisted?
-  div id="answer-id-#{answer.id}"
-    = div_for answer do
-      font color="#CC0000"
-        b = answer.user_id
-      |&nbsp;
-      = answer.body
-      |&nbsp;
-      - if current_user && answer.user_id == current_user.id
-        = link_to 'Редактировать ответ?', '', class: 'btn btn-default btn-xs edit-answer-link', data: { answer_id: answer.id }
-        |&nbsp;
-        = link_to 'Del answer?', answer, method: :delete, class: 'btn btn-danger btn-xs', remote: true
-        br
-        = form_for answer, method: "patch", remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
-          = f.label :body, 'Текст ответа:'
-          br
-          = f.text_area :body
-          = f.submit 'Сохранить'
+  = div_for answer do
+    font color="#CC0000"
+      b = answer.user_id
+    = answer.body
+    - if current_user && @question.user_id == current_user.id
+      - if answer.best
+        b 'best answer'
+      - else
+        = link_to('Best', best_answer_path(answer), method: :post, remote: true, class: 'btn btn-primary btn-xs best-answer-link')
+    - if current_user && answer.user_id == current_user.id
+      = link_to 'Редактировать ответ?', '', class: 'btn btn-default btn-xs edit-answer-link', data: { answer_id: answer.id }
+      = link_to 'Del answer?', answer, method: :delete, class: 'btn btn-danger btn-xs', remote: true
+      = form_for answer, method: "patch", remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
+        = f.label :body, 'Текст ответа:'
+        = f.text_area :body
+        = f.submit 'Сохранить'

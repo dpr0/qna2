@@ -7,27 +7,26 @@ br
 font color="green" Создан/изменен: &nbsp
 = @question.created_at.strftime("%d-%m-%y") + " / " + @question.updated_at.strftime("%d-%m-%y")
 br
-br
-font color="blue" ID вопроса: &nbsp
+font color="blue" Вопрос №
 = @question.id
 |&nbsp;
-- if current_user && @question.user_id == current_user.id
-  = link_to "Редактировать вопрос?", edit_question_path
-  |&nbsp;
-  = link_to "Del?", @question, method: :delete, data: {confirm: "Подтверждение удаления"}
-br
 font color="blue" Заголовок: &nbsp
 = @question.title
 |&nbsp;
 font color="blue" Содержание: &nbsp
 = @question.body
-br
+- if current_user && @question.user_id == current_user.id
+  = link_to "Редактировать вопрос?", edit_question_path, class: 'btn btn-default btn-xs edit-answer-link'
+  |&nbsp;
+  = link_to "Del?", @question, method: :delete, data: {confirm: "Подтверждение удаления"}, class: 'btn btn-danger btn-xs'
 br
 .answers
-  = render @question.answers
+  = render @question.answers.firstbest
 
 = form_for [@question, Answer.new], remote: true do |f|
-  = f.label :body, 'Your answer'
-  br = f.text_area :body, size: "90"
-  .answer-errors
-  = f.submit 'Ответить'
+  table
+    tr
+      td = f.label :body, 'Your answer'
+      td = f.text_area :body, size: "40"
+      td = f.submit 'Ответить'
+.answer-errors

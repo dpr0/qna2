@@ -18,7 +18,7 @@ feature 'Answer delete', 'Author of answer can to delete his answer' do
       sign_in(user)
       visit question_path(question)
     end
-    scenario 'sees link to edit' do
+    scenario 'sees link to delete' do
       within '.answers' do
         expect(page).to have_link 'Del answer?'
       end
