@@ -19,7 +19,7 @@ feature 'Answer edit', 'Author of answer can to edit his answer' do
 
   describe 'Authenticated user' do
 
-    before do
+    background do
       sign_in(user)
       visit question_path(question)
     end
@@ -55,9 +55,6 @@ feature 'Answer edit', 'Author of answer can to edit his answer' do
     scenario 'Только автор может отредактировать свой вопрос' do
       expect(page).to have_link 'Редактировать вопрос?'
     end
-    #scenario 'Переделать удаление ответов на ajax'
-    #scenario 'Автор вопроса может выбрать лучший ответ для своего вопроса (лучший ответ может быть только 1)'
-    #scenario 'Автор вопроса может выбрать другой ответ как лучший, если у вопроса уже выбран лучший ответ.'
-    #scenario 'Если у вопроса выбран лучший ответ, то он отображается первым в списке ответов.'
+  
   end
 end

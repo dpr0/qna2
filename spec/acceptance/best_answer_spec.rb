@@ -13,26 +13,24 @@ feature 'Best answer' do
   #scenario 'Автор вопроса может выбрать другой ответ как лучший, если у вопроса уже выбран лучший ответ.'
   #scenario 'Если у вопроса выбран лучший ответ, то он отображается первым в списке ответов.'
 
-  describe 'answer' do #, js: true do
-    before do
-      visit question_path(question)
+  scenario 'unauthorized user dont sees button best answer' do
+    visit question_path(question)
+    within '.answers' do
+      expect(page).to_not have_link 'Best'
     end
-    scenario 'unauthorized user dont sees button best answer' do
-      within '.answers' do
-        expect(page).to_not have_link 'Best'
-      end
-    end
-    scenario 'another user dont sees button best answer' do
-      sign_in user2
-      visit question_path(question)
-      within '.answers' do
-        expect(page).to_not have_link 'Best'
-      end
+  end
+
+  scenario 'another user dont sees button best answer' do
+    sign_in user2
+    visit question_path(question)
+    within '.answers' do
+      expect(page).to_not have_link 'Best'
     end
   end
 
   describe 'authorized user:', js: true do
-    before do
+
+    background do
       sign_in user
       visit question_path(question)
     end
@@ -47,6 +45,7 @@ feature 'Best answer' do
         end
       end
     end
+
     scenario 'choose another best answer and check that the selected answer is not the best' do
       within '.answers' do
         within "div#answer_#{answer2.id}.answer" do
@@ -60,5 +59,6 @@ feature 'Best answer' do
         end
       end
     end
+
   end
 end

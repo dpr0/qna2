@@ -8,7 +8,7 @@ feature 'User answer', ' In order to exchange my knowledge - As an authenticated
   given(:answer) { create(:answer, user: user, question: question) }
   given(:answer2) { create(:answer, user: user2, question: question2) }
 
-  before { sign_in user }
+  background { sign_in user }
   scenario 'User try to create invalid answer', js: true do
     visit question_path(question)
     click_on 'Ответить'

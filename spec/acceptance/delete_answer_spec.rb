@@ -14,7 +14,7 @@ feature 'Answer delete', 'Author of answer can to delete his answer' do
 
   describe 'Authenticated user' do
 
-    before do
+    background do
       sign_in(user)
       visit question_path(question)
     end

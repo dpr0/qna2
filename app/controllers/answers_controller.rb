@@ -19,19 +19,10 @@ class AnswersController < ApplicationController
   end
 
   def best
-    # знаю что это ошибка, писать лучший ответ в контроллере,
-    # т.к. fat model - slim controller,
-    # но... пока не знаю как работают транзакции в модели как других коллег
-    # и пробовал передавать это через $глобальную переменную - все работает
-    # это скорее всего тоже не правильно, но работает.
-    # Виталик напиши почему так нельзя и говнокод ли это
-    # (критику воспринимаю положительно)
     @question = @answer.question
     @oldbest = @answer.question.answers.find_by(best: 1)
     @oldbest.update_attributes(best: 0) if @oldbest
-    @answer.update_attributes(best: 1)
-    #$answer = @answer
-    #$answer.best_answer
+    @answer.best_answer
   end
 
   private

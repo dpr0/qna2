@@ -15,15 +15,8 @@ RSpec.describe Answer, type: :model do
     let!(:answer2) { create(:answer, question: question) }
 
     it 'choose best answer' do
-      pending("something else getting finished")
       answer.best_answer
       expect(answer.best).to eq true
-    end
-    it 'previous best answer is not best' do
-      pending("something else getting finished")
-      answer2.best_answer
-      expect(answer2.best).to eq true
-      expect(answer.best).to eq false
     end
 
   end
