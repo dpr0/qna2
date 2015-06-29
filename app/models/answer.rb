@@ -8,9 +8,11 @@ class Answer < ActiveRecord::Base
   validates :user_id,  presence: true
 
   scope :firstbest, -> { order('best DESC') }
+
   def best_answer
     @oldbest = question.answers.find_by(best: true)
     @oldbest.update_attributes(best: false) if @oldbest
     update_attributes(best: true)
   end
+
 end
