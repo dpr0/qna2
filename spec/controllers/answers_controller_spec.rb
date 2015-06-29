@@ -8,7 +8,7 @@ RSpec.describe AnswersController, type: :controller do
   let(:answer2)   { create(:answer, user: user2, question: question) }
 
   describe 'best answer' do
-    # ответ стал лучшим и какой ответ отрендерили.
+
     sign_in_user
     before { post :best, id: answer, question_id: question, format: :js }
 
@@ -17,20 +17,11 @@ RSpec.describe AnswersController, type: :controller do
       expect(answer.best).to eq true
     end
 
-    it 'previous best answer is not best' do
-      post :best, id: answer2, question_id: question, format: :js
-      answer.reload
-      answer2.reload
-      expect(answer2.best).to eq true
-      expect(answer.best).to eq false
-    end
-
     it 'Render answer :best' do
       expect(response).to render_template :best
     end
   end
 
-  #----------------------------------------------------------------------
   describe 'PATCH #update' do
   sign_in_user
     it 'assings the requested answer to @answer' do

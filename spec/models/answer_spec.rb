@@ -11,8 +11,8 @@ RSpec.describe Answer, type: :model do
   describe 'best answer' do
 
     let!(:question) { create(:question) }
-    let!(:answer) { create(:answer, question: question) }
-    let!(:answer2) { create(:answer, question: question) }
+    let(:answer) { create(:answer, question: question, best: false) }
+    let(:answer2) { create(:answer, question: question, best: false) }
 
     it 'choose best answer' do
       answer.best_answer
@@ -20,6 +20,7 @@ RSpec.describe Answer, type: :model do
     end
 
     it 'previous best answer is not best' do
+      create(:answer, question: question, best: true)
       answer.best_answer
       answer2.best_answer
       answer.reload
