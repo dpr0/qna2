@@ -20,8 +20,6 @@ class AnswersController < ApplicationController
 
   def best
     @question = @answer.question
-    @oldbest = @answer.question.answers.find_by(best: 1)
-    @oldbest.update_attributes(best: 0) if @oldbest
     @answer.best_answer
   end
 

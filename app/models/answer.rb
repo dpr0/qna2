@@ -9,6 +9,8 @@ class Answer < ActiveRecord::Base
 
   scope :firstbest, -> { order('best DESC') }
   def best_answer
-    update_attributes(best: 1) # аттрибут не integer, он и есть boolean, а 1=true
+    @oldbest = question.answers.find_by(best: true)
+    @oldbest.update_attributes(best: false) if @oldbest
+    update_attributes(best: true)
   end
 end

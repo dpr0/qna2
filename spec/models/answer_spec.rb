@@ -19,6 +19,13 @@ RSpec.describe Answer, type: :model do
       expect(answer.best).to eq true
     end
 
-  end
+    it 'previous best answer is not best' do
+      answer.best_answer
+      answer2.best_answer
+      answer.reload
+      expect(answer2.best).to eq true
+      expect(answer.best).to eq false
+    end
 
+  end
 end
