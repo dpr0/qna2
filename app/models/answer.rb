@@ -1,7 +1,9 @@
 class Answer < ActiveRecord::Base
 
+  has_many :attaches, as: :attachable
   belongs_to :question
   belongs_to :user
+  accepts_nested_attributes_for :attaches
 
   validates :body,         presence: true, length: { minimum: 2, maximum: 1000 }
   validates :question_id,  presence: true
