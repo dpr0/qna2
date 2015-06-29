@@ -13,10 +13,7 @@ feature 'Add files to question' do
     fill_in 'Body', with: 'text text'
     attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
     click_on 'Подать вопрос'
-    expect(page).to have_content 'Text question'
-    expect(page).to have_content 'text text'
     expect(page).to have_content 'spec_helper.rb'
-
   end
 
 end
