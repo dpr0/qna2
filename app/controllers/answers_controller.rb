@@ -20,6 +20,7 @@ class AnswersController < ApplicationController
 
   def best
     @question = @answer.question
+    #@oldbest = question.answers.find_by(best: true)
     @answer.best_answer
   end
 
@@ -34,6 +35,6 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:body)
+    params.require(:answer).permit(:body, attaches_attributes: [:file] )
   end
 end

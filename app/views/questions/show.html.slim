@@ -21,7 +21,7 @@ font color="blue" Attachments: &nbsp
   li= link_to a.file.identifier, a.file.url
   /li= link_to a.file.file.filename, a.file.url
 - if current_user && @question.user_id == current_user.id
-  = link_to "Редактировать вопрос?", edit_question_path, class: 'btn btn-default btn-xs edit-answer-link'
+  = link_to "Редактировать вопрос?", edit_question_path, class: 'btn btn-default btn-xs edit-question-link'
   |&nbsp;
   = link_to "Del?", @question, method: :delete, data: {confirm: "Подтверждение удаления"}, class: 'btn btn-danger btn-xs'
 br
@@ -29,9 +29,10 @@ br
   = render @question.answers.firstbest
 
 = form_for [@question, Answer.new], remote: true do |f|
-  table
-    tr
-      td = f.label :body, 'Your answer'
-      td = f.text_area :body, size: "40"
-      td = f.submit 'Ответить'
+  = f.label :body, 'Your answer'
+  = f.text_area :body, size: "40"
+  = f.fields_for :attaches do |a|
+    = a.label :file
+    = a.file_field :file
+  = f.submit 'Ответить'
 .answer-errors
