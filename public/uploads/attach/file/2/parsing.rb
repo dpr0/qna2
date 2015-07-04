@@ -2,7 +2,7 @@ require 'open-uri'
 require 'nokogiri'
 require 'json'
 
-#url = 'http://www.cubecinema.com/programme'
+# url = 'http://www.cubecinema.com/programme'
 url = 'http://localhost:3000/lens_lists'
 html = open(url)
 
@@ -20,4 +20,4 @@ doc.css('.showing').each do |showing|
   showings.push(id: showing_id, name: title, frmin: tags, frmax: dates, diafmin: description)
 end
 puts showings
-#puts JSON.pretty_generate(showings)
+# puts JSON.pretty_generate(showings)

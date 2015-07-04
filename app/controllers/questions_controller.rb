@@ -17,6 +17,10 @@ class QuestionsController < ApplicationController
   end
 
   def edit
+    @question.attaches.build
+    # при редактировании вопроса удаляется
+    # прикрепленный файл из-за этого
+    # а без этой строки в форме пропадает прикрепление
   end
 
   def create
@@ -60,6 +64,6 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:title, :body, attaches_attributes: [:file] )
+    params.require(:question).permit(:title, :body, attaches_attributes: [:id, :file, :_destroy])
   end
 end

@@ -16,6 +16,7 @@ gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 gem 'jquery-ui-rails'
 gem 'carrierwave'
 gem 'remotipart'
+gem 'cocoon'
 
 # gem 'bcrypt', '~> 3.1.7'           # Use ActiveModel has_secure_password
 # gem 'unicorn'                      # Use Unicorn as the app server
@@ -30,7 +31,7 @@ group :development, :test do
   gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger'
   gem 'pry'
   gem 'better_errors'
-  #gem 'selenium-webdriver'
+  # gem 'selenium-webdriver'
   gem 'database_cleaner'
   gem 'capybara-webkit'
 end

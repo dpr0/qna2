@@ -4,7 +4,10 @@
       b = answer.user_id
     = answer.body
     - answer.attaches.each do |a|
-      li= link_to a.file.identifier, a.file.url
+      li id="attach_#{a.id}"
+        = link_to a.file.identifier, a.file.url
+        - if current_user && answer.user_id == current_user.id
+          = link_to "Удалить #{a.file.identifier}?", attach_path(a), method: :delete, class: 'btn btn-danger btn-xs', remote: true
     - if current_user && @question.user_id == current_user.id
       - if answer.best
         b 'best answer'

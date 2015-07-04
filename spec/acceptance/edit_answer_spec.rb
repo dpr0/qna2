@@ -11,14 +11,12 @@ feature 'Answer edit', 'Author of answer can to edit his answer' do
   given(:answer2) { create(:answer, user: user2, question: question2) }
   given(:answer3) { create(:answer, user: user, question: question2) }
 
-
   scenario 'Unauthenticated user try to edit answer' do
     visit question_path(question)
     expect(page).to_not have_link 'Редактировать ответ?'
   end
 
   describe 'Authenticated user' do
-
     background do
       sign_in(user)
       visit question_path(question)
@@ -41,20 +39,19 @@ feature 'Answer edit', 'Author of answer can to edit his answer' do
     end
 
     scenario 'try to edit other user answer' do
-    #scenario 'Пользователь видит ссылку РедОтв? если он автор этого ответа'
-    #scenario 'Только автор может отредактировать свой ответ'
+      # scenario 'Пользователь видит ссылку РедОтв? если он автор этого ответа'
+      # scenario 'Только автор может отредактировать свой ответ'
       question2
       answer2
-      #answer3 # для проверки что выдаст ошибку
+      # answer3 # для проверки что выдаст ошибку
       visit question_path(question2)
       within '.answers' do
-       expect(page).to_not have_link 'Редактировать ответ?'
+        expect(page).to_not have_link 'Редактировать ответ?'
       end
     end
 
     scenario 'Только автор может отредактировать свой вопрос' do
       expect(page).to have_link 'Редактировать вопрос?'
     end
-  
   end
 end

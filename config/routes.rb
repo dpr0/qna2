@@ -6,7 +6,7 @@ Rails.application.routes.draw do
       post 'best', on: :member
     end
   end
-  resources :answers
+  resources :attaches, only: [:destroy]
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

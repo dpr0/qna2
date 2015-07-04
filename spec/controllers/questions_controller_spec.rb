@@ -5,6 +5,7 @@ RSpec.describe QuestionsController, type: :controller do
   let(:user2) { create(:user) }
   let(:question) { create(:question, user: user) }
   let(:question2) { create(:question, user: user2) }
+
   describe 'GET #index' do
     let(:questions) { create_list(:question, 2) }
     before { get :index }
@@ -22,7 +23,12 @@ RSpec.describe QuestionsController, type: :controller do
       expect(assigns(:question)).to eq question
     end
 
+    it 'build new attach for answer' do
+      expect(assigns(:answer).attaches.first).to be_a_new(Attach)
+    end
+
     it 'assigns new answer for question' do
+      expect(assigns(:answer)).to be_a_new(Answer)
     end
 
     it 'renders show view' do
