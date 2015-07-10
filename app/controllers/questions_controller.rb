@@ -17,10 +17,7 @@ class QuestionsController < ApplicationController
   end
 
   def edit
-    @question.attaches.build
-    # при редактировании вопроса удаляется
-    # прикрепленный файл из-за этого
-    # а без этой строки в форме пропадает прикрепление
+
   end
 
   def create
