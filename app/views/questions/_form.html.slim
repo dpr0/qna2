@@ -1,7 +1,16 @@
 = form_for @question do |f|
-  i= f.label :title
-  = f.text_field :title, size: 61
-  br
-  i= f.label :body
-  = f.text_area :body, rows: 5, cols: 60
-  br= f.submit "Подать вопрос", class: 'btn btn-success btn-sm'
+  .field
+    = f.label :title
+    = f.text_field :title, size: 61
+    = f.label :body
+    = f.text_area :body, rows: 5, cols: 60
+  .attaches_form
+    -if @question.new_record?
+      = f.fields_for :attaches do |a|
+        = render 'attach_fields', f: a
+      .links
+        p= link_to_add_association 'add file', f, :attaches
+    -else
+      .attaches_form
+        = link_to_add_association 'add file', f, :attaches
+    = f.submit "Подать вопрос", class: 'btn btn-success btn-sm'

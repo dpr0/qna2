@@ -1,5 +1,1 @@
-$("#answer_<%= @answer.id %>").replaceWith('<%= j render @answer %>');
-
-<% if @oldbest %>
-    $("#answer_<%= @oldbest.id %>").replaceWith('<%= j render @oldbest%>')
-<% end %>
+$('.answers').html('<%= j render @question.answers.firstbest %>');

@@ -1,32 +1,43 @@
-font color="green" Количество ответов: &nbsp
-= @question.answers.count
-br
-font color="green" ID пользователя создавшего вопрос: &nbsp
-= @question.user_id
-br
-font color="green" Создан/изменен: &nbsp
-= @question.created_at.strftime("%d-%m-%y") + " / " + @question.updated_at.strftime("%d-%m-%y")
-br
-font color="blue" Вопрос №
-= @question.id
-|&nbsp;
-font color="blue" Заголовок: &nbsp
-= @question.title
-|&nbsp;
-font color="blue" Содержание: &nbsp
-= @question.body
-- if current_user && @question.user_id == current_user.id
-  = link_to "Редактировать вопрос?", edit_question_path, class: 'btn btn-default btn-xs edit-answer-link'
+.question
+  font color="green" Количество ответов: &nbsp
+  = @question.answers.count
+  br
+  font color="green" ID пользователя создавшего вопрос: &nbsp
+  = @question.user_id
+  br
+  font color="green" Создан/изменен: &nbsp
+  = @question.created_at.strftime("%d-%m-%y") + " / " + @question.updated_at.strftime("%d-%m-%y")
+  br
+  font color="blue" Вопрос №
+  = @question.id
   |&nbsp;
-  = link_to "Del?", @question, method: :delete, data: {confirm: "Подтверждение удаления"}, class: 'btn btn-danger btn-xs'
-br
+  font color="blue" Заголовок: &nbsp
+  = @question.title
+  |&nbsp;
+  font color="blue" Содержание: &nbsp
+  = @question.body
+  - if current_user && @question.user_id == current_user.id
+    = link_to "Редактировать вопрос?", edit_question_path, class: 'btn btn-default btn-xs edit-question-link'
+    |&nbsp;
+    = link_to "Del?", @question, method: :delete, data: {confirm: "Подтверждение удаления"}, class: 'btn btn-danger btn-xs'
+  br
+  font color="blue" Attachments: &nbsp
+  - @question.attaches.each do |a|
+    p id="attach_#{a.id}"
+      = link_to a.file.identifier, a.file.url
+      - if current_user && @question.user_id == current_user.id
+        = link_to "Удалить #{a.file.identifier}?", attach_path(a), method: :delete, class: 'btn btn-danger btn-xs', data: {confirm: "Подтверждение удаления"}, remote: true
 .answers
   = render @question.answers.firstbest
 
-= form_for [@question, Answer.new], remote: true do |f|
-  table
-    tr
-      td = f.label :body, 'Your answer'
-      td = f.text_area :body, size: "40"
-      td = f.submit 'Ответить'
+= form_for [@question, @answer], remote: true do |f|
+  .answer_text_body
+    = f.label :body, 'Your answer'
+    = f.text_area :body, size: "40"
+  .answer_attach
+    = f.fields_for :attaches do |a|
+      = render 'attach_fields', f: a
+      = link_to_add_association 'add file', f, :attaches
+  .answer_text_body
+    = f.submit 'Ответить'
 .answer-errors

@@ -8,7 +8,6 @@ RSpec.describe AnswersController, type: :controller do
   let(:answer2)   { create(:answer, user: user2, question: question) }
 
   describe 'best answer' do
-
     sign_in_user
     before { post :best, id: answer, question_id: question, format: :js }
 
@@ -23,7 +22,7 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'PATCH #update' do
-  sign_in_user
+    sign_in_user
     it 'assings the requested answer to @answer' do
       patch :update, id: answer, answer: attributes_for(:answer), format: :js
       expect(assigns(:answer)).to eq answer
@@ -42,7 +41,6 @@ RSpec.describe AnswersController, type: :controller do
       patch :update, id: answer, answer: attributes_for(:answer), format: :js
       expect(response).to render_template :update
     end
-
   end
 
   describe 'POST #create' do
@@ -77,7 +75,7 @@ RSpec.describe AnswersController, type: :controller do
       before { answer }
       it 'deletes answer' do
         sign_in(user)
-        expect { delete :destroy, id: answer, format: :js }.to change(question.answers, :count).by(-1)
+        expect { delete :destroy, id: answer, format: :js }.to change(Answer, :count).by(-1)
       end
       # Нужен тест на то, что пользователь не может удалить чужой ответ
       it 'user cant delete another user answer' do

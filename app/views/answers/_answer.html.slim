@@ -3,15 +3,27 @@
     font color="#CC0000"
       b = answer.user_id
     = answer.body
+    - answer.attaches.each do |a|
+      b id="attach_#{a.id}"
+        = link_to a.file.identifier, a.file.url
+        - if current_user && answer.user_id == current_user.id
+          = link_to "Удалить #{a.file.identifier}?", attach_path(a), method: :delete, class: 'btn btn-danger btn-xs', data: {confirm: "Подтверждение удаления"}, remote: true
     - if current_user && @question.user_id == current_user.id
       - if answer.best
         b 'best answer'
       - else
         = link_to('Best', best_answer_path(answer), method: :post, remote: true, class: 'btn btn-primary btn-xs best-answer-link')
     - if current_user && answer.user_id == current_user.id
-      = link_to 'Редактировать ответ?', '', class: 'btn btn-default btn-xs edit-answer-link', data: { answer_id: answer.id }
-      = link_to 'Del answer?', answer, method: :delete, class: 'btn btn-danger btn-xs', remote: true
+      = link_to 'Редактировать ответ?', '', class: 'btn btn-default btn-xs edit-answer-link', data: { answer_id: answer.id }, remote: true
+      = link_to 'Del answer?', answer, method: :delete, class: 'btn btn-danger btn-xs', data: {confirm: "Подтверждение удаления"}, remote: true
       = form_for answer, method: "patch", remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
-        = f.label :body, 'Текст ответа:'
-        = f.text_area :body
-        = f.submit 'Сохранить'
+        .answer_text_body
+          = f.label :body, 'Текст ответа:'
+          = f.text_area :body
+        .answer_attach
+          = f.fields_for :attaches do |a|
+            = render 'attach_fields', f: a
+            .links
+              p= link_to_add_association 'add file', f, :attaches
+        .answer_text_body
+          = f.submit 'Сохранить'

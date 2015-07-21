@@ -13,7 +13,6 @@ feature 'Answer delete', 'Author of answer can to delete his answer' do
   end
 
   describe 'Authenticated user' do
-
     background do
       sign_in(user)
       visit question_path(question)
@@ -25,16 +24,16 @@ feature 'Answer delete', 'Author of answer can to delete his answer' do
     end
 
     scenario 'try to delete his answer and another user answer', js: true do
-    #scenario 'Переделать удаление ответов на ajax'
+      # scenario 'Переделать удаление ответов на ajax'
       expect(page).to have_content 'MyAnswer'
-      expect(page).to have_content "Del answer?"
-      click_on "Del answer?"
+      expect(page).to have_content 'Del answer?'
+      click_on 'Del answer?'
       expect(page).to_not have_content 'MyAnswer'
 
       answer3
       visit question_path(question)
       expect(page).to have_content 'MyAnswer'
-      expect(page).to_not have_content "Del answer?"
+      expect(page).to_not have_content 'Del answer?'
     end
   end
 end

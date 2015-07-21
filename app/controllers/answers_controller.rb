@@ -34,6 +34,6 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:body)
+    params.require(:answer).permit(:body, attaches_attributes: [:id, :file, :_destroy])
   end
 end

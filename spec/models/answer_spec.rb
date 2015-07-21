@@ -3,13 +3,14 @@ require 'rails_helper'
 RSpec.describe Answer, type: :model do
   it { should belong_to(:question) }
   it { should belong_to(:user) }
+  it { should have_many(:attaches).dependent(:destroy) }
+  it { should accept_nested_attributes_for :attaches }
   it { should validate_presence_of(:body) }
   it { should validate_presence_of(:question_id) }
   it { should validate_presence_of(:user_id) }
   it { should validate_length_of(:body).is_at_most(1000) }
 
   describe 'best answer' do
-
     let!(:question) { create(:question) }
     let(:answer) { create(:answer, question: question, best: false) }
     let(:answer2) { create(:answer, question: question, best: false) }
@@ -27,6 +28,5 @@ RSpec.describe Answer, type: :model do
       expect(answer2.best).to eq true
       expect(answer.best).to eq false
     end
-
   end
 end
