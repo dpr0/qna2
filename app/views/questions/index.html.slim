@@ -5,27 +5,17 @@ p= link_to 'Ask question', new_question_path
     div class="panel-heading" Список вопросов:
     table class="table" id="questions"
       thead
-      tr
-        th User:
-        th Title:
-        th Ответов:
-        th Создан:
-        th Изменен:
-        th Редактировать?
-        th Удалить?
-      tbody
-      - @questions.each do |question|
         tr
-          td = question.user_id
-          td = link_to question.title, question_path(question)
-          td = question.answers.count
-          td = question.created_at.strftime("%d-%m-%y")
-          td = question.updated_at.strftime("%d-%m-%y") if question.created_at != question.updated_at
-          - if current_user && question.user_id == current_user.id
-            td = link_to " Edit? ", edit_question_path(question)
-            td = link_to " Del? ", question, method: :delete, data: {confirm: "Подтверждение удаления"}
-          - else
-            td &nbsp;
-            td &nbsp;
+          th User:
+          th Title:
+          th Ответов:
+          th Создан:
+          th Изменен:
+          th Голосов:
+          th Действие:
+      tbody
+        - @questions.each do |question|
+          tr class="question_#{question.id}"
+            = render 'questions_list', question: question
 - else
   h4 Еще нет вопросов

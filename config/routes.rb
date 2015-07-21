@@ -2,7 +2,13 @@ Rails.application.routes.draw do
   devise_for :users
   root to: 'questions#index'
   resources :questions do
+    post 'perfect', on: :member
+    post 'bullshit', on: :member
+    post 'cancel', on: :member
     resources :answers, shallow: true, only: [:create, :destroy, :update] do
+      post 'perfect', on: :member
+      post 'bullshit', on: :member
+      post 'cancel', on: :member
       post 'best', on: :member
     end
   end

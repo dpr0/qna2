@@ -1,0 +1,1 @@
+$(".question_<%= @question.id %>").replaceWith("<tr class='question_<%= @question.id %>'>" + '<%= j render 'questions/questions_list', question: @question %>' + "</tr>");
