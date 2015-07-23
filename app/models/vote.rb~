@@ -4,4 +4,10 @@ class Vote < ActiveRecord::Base
   belongs_to :votable, polymorphic: true
   validates :votable, presence: true # , inclusion: { in: ['Question', 'Answer'] }
   validates :score, presence: true, inclusion: { in: [-1, 1] }
+
+  def perfect
+  end
+
+  def bullshit
+  end
 end

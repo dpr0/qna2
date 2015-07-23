@@ -1,6 +1,7 @@
 class AnswersController < ApplicationController
+  include Voteconcern
+
   before_action :authenticate_user!
-  before_action :load_question, only: [:create]
   before_action :load_answer, only: [:destroy, :update, :best, :perfect, :bullshit, :cancel]
   before_action :load_question_answer, only: [:best, :perfect, :bullshit, :cancel]
 
@@ -10,6 +11,7 @@ class AnswersController < ApplicationController
   end
 
   def create
+    @question = Question.find(params[:question_id])
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
     @answer.save
@@ -41,34 +43,10 @@ class AnswersController < ApplicationController
     @answer.best_answer
   end
 
-  def perfect
-    @answer.increment!(:votes_count)
-    @answer.votes << Vote.new(user_id: current_user.id, score: 1)
-  end
-
-  def bullshit
-    @answer.decrement!(:votes_count)
-    @answer.votes << Vote.new(user_id: current_user.id, score: -1)
-  end
-
-  def cancel
-    @vote = @answer.votes.find_by(user_id: current_user.id)
-    if @vote.score == 1
-      @answer.decrement!(:votes_count)
-    else
-      @answer.increment!(:votes_count)
-    end
-    @vote.destroy if @vote.user_id == current_user.id
-  end
-
   private
 
   def load_answer
     @answer = Answer.find(params[:id])
-  end
-
-  def load_question
-    @question = Question.find(params[:question_id])
   end
 
   def answer_params

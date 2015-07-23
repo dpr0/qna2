@@ -1,9 +1,9 @@
 class Question < ActiveRecord::Base
+  include Votemodelconcern
+  include Attachconcern
+
   has_many :answers, dependent: :destroy
-  has_many :attaches, as: :attachable, dependent: :destroy
-  has_many :votes, as: :votable, dependent: :destroy
   belongs_to :user
-  accepts_nested_attributes_for :attaches, reject_if: :all_blank, allow_destroy: true
 
   validates :title,   presence: true, length: { minimum: 5, maximum: 140 }
   validates :body,    presence: true, length: { minimum: 5, maximum: 1000 }
