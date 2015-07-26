@@ -28,7 +28,7 @@ feature 'Best answer' do
     end
   end
 
-  describe 'authorized user:', js: true do
+  describe 'authorized user:' do#, js: true do
     background do
       sign_in user
       visit question_path(question)
@@ -39,7 +39,9 @@ feature 'Best answer' do
         within "div#answer_#{answer3.id}.answer" do
           expect(page).to have_content 'Best'
           click_on 'Best'
-          # visit question_path(question)
+        end
+        visit question_path(question)
+        within "div#answer_#{answer3.id}.answer" do
           expect(page).to have_content 'best answer'
           expect(page).to_not have_link 'Best'
         end
@@ -50,7 +52,9 @@ feature 'Best answer' do
       within '.answers' do
         within "div#answer_#{answer2.id}.answer" do
           click_on 'Best'
-          # visit question_path(question)
+        end
+        visit question_path(question)
+        within "div#answer_#{answer2.id}.answer" do
           expect(page).to_not have_link 'Best'
           expect(page).to have_content 'best answer'
         end

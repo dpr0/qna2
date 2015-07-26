@@ -1,5 +1,5 @@
 class Answer < ActiveRecord::Base
-  include Votable
+  include Voted
   include Attachable
 
   belongs_to :question

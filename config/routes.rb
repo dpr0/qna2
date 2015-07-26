@@ -1,17 +1,21 @@
 Rails.application.routes.draw do
   devise_for :users
   root to: 'questions#index'
-  resources :questions do
-    post 'perfect', on: :member
-    post 'bullshit', on: :member
-    post 'cancel', on: :member
-    resources :answers, shallow: true, only: [:create, :destroy, :update] do
-      post 'perfect', on: :member
-      post 'bullshit', on: :member
-      post 'cancel', on: :member
+
+  concern :votable do
+    member do
+      post 'perfect'
+      post 'bullshit'
+      post 'cancel'
+    end
+  end
+
+  resources :questions, concerns: :votable do
+    resources :answers, concerns: :votable, shallow: true, only: [:create, :destroy, :update] do
       post 'best', on: :member
     end
   end
+
   resources :attaches, only: [:destroy]
 
   # The priority is based upon order of creation: first created -> highest priority.
