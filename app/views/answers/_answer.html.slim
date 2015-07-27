@@ -11,7 +11,7 @@
     b class="votes_count"
       =" #{answer.votes.sum("score")} / #{answer.votes_count} "
     - if current_user && current_user.id != answer.user_id
-      - if answer.votes.find_by(user_id: current_user.id)
+      - if current_user.voted_for?(answer)
         = link_to("Cancel vote", cancel_answer_path(answer), method: :post, remote: true, class: 'btn btn-danger btn-xs best-answer-link')
       - else
         = link_to("Perfect", perfect_answer_path(answer), method: :post, remote: true, class: 'btn btn-primary btn-xs best-answer-link')

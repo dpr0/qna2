@@ -10,49 +10,33 @@ RSpec.describe Answer, type: :model do
   it { should validate_presence_of(:user_id) }
   it { should validate_length_of(:body).is_at_most(1000) }
   it { should have_many(:votes).dependent(:destroy) }
-  let!(:question) { create(:question) }
-  let(:user) { create(:user ) }
-  let(:user2) { create(:user ) }
-  let(:user3) { create(:user ) }
-  let(:user4) { create(:user ) }
-  let(:answer) { create(:answer, question: question ) }
-  
-  describe 'votes' do
-    it 'choose vote for question' do
-      question.perfect(user)
-      question.reload
-      question.bullshit(user2)
-      question.reload
-      question.bullshit(user3)
-      question.reload
-      question.cancel(user3)
-      question.perfect(user3)
-      question.reload
-      question.perfect(user4)
-      question.reload
-      expect(question.votes_count).to eq 2
-    end
 
-    it 'choose vote answer' do
+  let(:question) { create(:question) }
+  let(:user) { create(:user ) }
+  let(:answer) { create(:answer, question: question ) }
+  let(:answer2) { create(:answer, question: question ) }
+
+  describe 'votes' do
+    it 'choose perfect vote for answer' do
       answer.perfect(user)
       answer.reload
-      answer.bullshit(user2)
-      answer.reload
-      answer.bullshit(user3)
-      answer.reload
-      answer.cancel(user3)
-      answer.perfect(user3)
-      answer.reload
-      answer.perfect(user4)
-      answer.reload
-      expect(answer.votes_count).to eq 2
+      expect(answer.votes_count).to eq 1
     end
+    it 'choose bullshit vote for answer' do
+      answer.bullshit(user)
+      answer.reload
+      expect(answer.votes_count).to eq -1
+    end
+    it 'cancel vote for answer' do
+      answer.perfect(user)
+      answer.reload
+      answer.cancel(user)
+      expect(answer.votes_count).to eq 0
+    end
+      
   end
 
   describe 'best answer' do
-    let(:answer) { create(:answer, question: question, best: false) }
-    let(:answer2) { create(:answer, question: question, best: false) }
-
     it 'choose best answer' do
       answer.best_answer
       expect(answer.best).to eq true
