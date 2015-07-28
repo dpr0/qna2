@@ -1,8 +1,9 @@
 class Answer < ActiveRecord::Base
+  include Votable
+  include Attachable
+
   belongs_to :question
-  has_many :attaches, as: :attachable, dependent: :destroy
   belongs_to :user
-  accepts_nested_attributes_for :attaches, reject_if: :all_blank, allow_destroy: true
 
   validates :body,        presence: true, length: { minimum: 2, maximum: 1000 }
   validates :question_id, presence: true

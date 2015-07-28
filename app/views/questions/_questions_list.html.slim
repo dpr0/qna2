@@ -1,0 +1,20 @@
+td = question.user_id
+td = link_to question.title, question_path(question)
+td = question.answers.count
+td = question.created_at.strftime("%d-%m-%y")
+td = question.updated_at.strftime("%d-%m-%y") if question.created_at != question.updated_at
+td
+  div class="votes_count"
+    = "#{question.votes.sum("score")} / #{question.votes_count}"
+td
+  - if current_user
+    - if current_user.id != question.user_id
+      - if current_user.voted_for?(question)
+        = link_to("Cancel vote", cancel_question_path(question), method: :post, remote: true, class: 'btn btn-danger btn-xs best-answer-link')
+      - else
+        = link_to("Perfect", perfect_question_path(question), method: :post, remote: true, class: 'btn btn-primary btn-xs best-answer-link')
+        i &nbsp;or&nbsp;
+        = link_to("Bullshit", bullshit_question_path(question), method: :post, remote: true, class: 'btn btn-primary btn-xs best-answer-link')
+    - else
+      i= link_to " Edit? ", edit_question_path(question)
+      i= link_to " Del? ", question, method: :delete, data: {confirm: "Подтверждение удаления"}

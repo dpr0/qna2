@@ -17,6 +17,7 @@ gem 'jquery-ui-rails'
 gem 'carrierwave'
 gem 'remotipart'
 gem 'cocoon'
+# gem 'activerecord-postgres-hstore'
 
 # gem 'bcrypt', '~> 3.1.7'           # Use ActiveModel has_secure_password
 # gem 'unicorn'                      # Use Unicorn as the app server

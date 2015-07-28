@@ -14,23 +14,36 @@
   font color="blue" Заголовок: &nbsp
   = @question.title
   |&nbsp;
-  font color="blue" Содержание: &nbsp
-  = @question.body
+  div class='votes_count'
+    font color="blue" Голосов:&nbsp
+    ="#{@question.votes.sum("score")} / #{@question.votes_count} "
+    - if current_user && current_user.id != @question.user_id
+      /- if @question.votes.find_by(user_id: current_user.id)
+      - if current_user.voted_for?(@question)
+        = link_to("Cancel vote", cancel_question_path(@question), method: :post, remote: true, class: 'btn btn-danger btn-xs best-answer-link')
+      - else
+        = link_to("Perfect", perfect_question_path(@question), method: :post, remote: true, class: 'btn btn-primary btn-xs best-answer-link')
+        i &nbsp;or&nbsp;
+        = link_to("Bullshit", bullshit_question_path(@question), method: :post, remote: true, class: 'btn btn-primary btn-xs best-answer-link')
+  p
+    font color="blue" Содержание: &nbsp
+    = @question.body
   - if current_user && @question.user_id == current_user.id
     = link_to "Редактировать вопрос?", edit_question_path, class: 'btn btn-default btn-xs edit-question-link'
     |&nbsp;
     = link_to "Del?", @question, method: :delete, data: {confirm: "Подтверждение удаления"}, class: 'btn btn-danger btn-xs'
-  br
+  p
   font color="blue" Attachments: &nbsp
   - @question.attaches.each do |a|
-    p id="attach_#{a.id}"
+    i id="attach_#{a.id}"
       = link_to a.file.identifier, a.file.url
       - if current_user && @question.user_id == current_user.id
         = link_to "Удалить #{a.file.identifier}?", attach_path(a), method: :delete, class: 'btn btn-danger btn-xs', data: {confirm: "Подтверждение удаления"}, remote: true
+
 .answers
   = render @question.answers.firstbest
 
-= form_for [@question, @answer], remote: true do |f|
+= form_for [@question, @answer], remote: true, data: {type: :json} do |f|
   .answer_text_body
     = f.label :body, 'Your answer'
     = f.text_area :body, size: "40"

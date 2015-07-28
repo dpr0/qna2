@@ -6,6 +6,30 @@ RSpec.describe QuestionsController, type: :controller do
   let(:question) { create(:question, user: user) }
   let(:question2) { create(:question, user: user2) }
 
+  describe 'POST #perfect/bullshit/cancel' do
+    sign_in_user
+
+    it 'choose perfect question' do
+      post :perfect, id: question, format: :js      
+      question.reload
+      expect(question.votes_count).to eq 1
+    end
+    it 'choose bullshit question' do
+      post :bullshit, id: question, format: :js      
+      question.reload
+      expect(question.votes_count).to eq -1
+    end
+    it 'choose cancel question' do
+      post :perfect, id: question, format: :js      
+      post :cancel, id: question, format: :js      
+      question.reload
+      expect(question.votes_count).to eq 0
+    end
+    it 'Render question :perfect' do
+      expect(post :perfect, id: question, format: :js).to render_template :perfect
+    end
+  end
+
   describe 'GET #index' do
     let(:questions) { create_list(:question, 2) }
     before { get :index }
