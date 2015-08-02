@@ -28,6 +28,13 @@ RSpec.describe QuestionsController, type: :controller do
     it 'Render question :perfect' do
       expect(post :perfect, id: question, format: :js).to render_template :perfect
     end
+    it 'Render question :bullshit' do
+      expect(post :bullshit, id: question, format: :js).to render_template :bullshit
+    end
+    it 'Render question :cancel' do
+      post :perfect, id: question, format: :js      
+      expect(post :cancel, id: question, format: :js).to render_template :cancel
+    end
   end
 
   describe 'GET #index' do

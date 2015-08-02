@@ -12,11 +12,14 @@ gem 'sdoc', '~> 0.4.0', group: :doc  # bundle exec rake doc:rails generates the 
 gem 'slim-rails'
 gem 'devise'
 gem 'bootstrap-sass'
-gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
+#gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
+gem 'jquery-datatables-rails', '~> 3.3.0'
 gem 'jquery-ui-rails'
 gem 'carrierwave'
 gem 'remotipart'
 gem 'cocoon'
+gem 'private_pub'
+gem 'thin'
 # gem 'activerecord-postgres-hstore'
 
 # gem 'bcrypt', '~> 3.1.7'           # Use ActiveModel has_secure_password

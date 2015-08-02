@@ -13,8 +13,12 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.remotipart
+//= require private_pub
 //= require cocoon
 //= require jquery.dataTables
+//= require bootstrap
+//= require dataTables/jquery.dataTables
+//= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
 //= require turbolinks
 //= require_tree .
 
