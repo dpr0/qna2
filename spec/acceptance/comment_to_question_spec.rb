@@ -41,7 +41,7 @@ feature 'User answer', ' In order to exchange my knowledge - As an authenticated
     end
   end
 
-  scenario 'Authenticated user can create answer on the question', js: true do
+  scenario 'Authenticated user can create answer on the question' do
     visit question_path(question)
     fill_in 'Your answer', with: 'text text'
     click_on 'Ответить'

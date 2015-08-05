@@ -6,7 +6,7 @@ $ ->
     console.log(data)
     question = $.parseJSON(data['question'])
     html = '<tr class="question_' + question.id + '"><td>' + question.user_id + '</td><td>' + question.title + '</td></tr>'
-    $('#questions').append(html).ajax.reload();
+    $('#questions').append(html);
 
 jQuery ->
   $('#questions').DataTable()

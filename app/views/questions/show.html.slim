@@ -1,4 +1,4 @@
-.question
+.question data={question_id: "#{@question.id}"}
   font color="green" Количество ответов: &nbsp
   = @question.answers.count
   br
@@ -39,8 +39,16 @@
       = link_to a.file.identifier, a.file.url
       - if current_user && @question.user_id == current_user.id
         = link_to "Удалить #{a.file.identifier}?", attach_path(a), method: :delete, class: 'btn btn-danger btn-xs', data: {confirm: "Подтверждение удаления"}, remote: true
+p Комментарии:
+.question-comments
+  = render @question.comments
+  = form_for [@question, @comment], remote: true do |f|
+    .comment_text_body
+      = f.label :body, 'Текст Комментария:'
+      = f.text_area :body, size: "30"
+      = f.submit 'Комментировать'
 
-.answers data={question_id: "#{@question.id}"}
+.answers
   = render @question.answers.firstbest
 
 = form_for [@question, @answer], remote: true do |f| #, data: {type: :json} do |f|
@@ -56,3 +64,4 @@
 .answer-errors
 
 = subscribe_to "/questions/#{@question.id}/answers"
+= subscribe_to "/questions/#{@question.id}/comments"

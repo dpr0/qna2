@@ -17,20 +17,14 @@ class AnswersController < ApplicationController
     @answer.save
 
     respond_to do |format|
-      #format.html do
-      #end
       if @answer.save
-        #  render partial: 'answers/answer', layout: false
-        #  render json: @answer
         format.js do
           PrivatePub.publish_to "/questions/#{@question.id}/answers", answer: @answer.to_json
           render nothing: true
         end
       else
-        #  render text: @answer.errors.full_messages.join("\n"), status: :unprocessable_entity
-        #  render json: @answer.errors.full_messages, status: :unprocessable_entity
         format.js
-        #  do
+        #do
         #  PrivatePub.publish_to "/questions/#{@question.id}/answers", errors: @answer.errors.full_messages
         #  render nothing: true
         #end

@@ -11,6 +11,7 @@ RSpec.describe Question, type: :model do
   it { should validate_length_of(:body).is_at_most(1000) }
   it { should accept_nested_attributes_for :attaches }
   it { should have_many(:votes).dependent(:destroy) }
+  it { should have_many(:comments).dependent(:destroy) }
 
   let(:question) { create(:question) }
   let(:user) { create(:user ) }

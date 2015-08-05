@@ -19,11 +19,11 @@ $ ->
 #    errors = $.parseJSON(xhr.responseText)
 #    $.each errors, (index, value) ->
 #      $('.answer-errors').append(value);
-  questionId = $('.answers').data('questionId')
+  questionId = $('.question').data('questionId')
   PrivatePub.subscribe '/questions/' + questionId + '/answers', (data, channel) ->
     console.log(data)
     answer = $.parseJSON(data['answer'])
     $('.answers').append('<div class="answer" id="answer_' + answer.id + '">' + answer.user_id + ' ' + answer.body);
-    $('.answers').append('<a href="#" onclick="paintIt(this, "#990000")">Edit</a>');
+    $('.answers').append('<a href="../" onclick="paintIt(this, "#990000")">Edit</a>');
     $('.new_answer #answer_body').val('');
 
