@@ -1,0 +1,13 @@
+<% if @comment.errors.present? %>
+    <% @comment.errors.full_messages.each do |message| %>
+        $('.comment-errors').html('<%= j message %>');
+    <% end %>
+<% else %>
+    $('#comment_<%= @comment.id %>').replaceWith('<%= j render @comment %>');
+    $('.edit-comment-link').click(function(e) {
+        e.preventDefault();
+        $(this).hide();
+        comment_id = $(this).data('commentId');
+        $('form#edit-comment-' + comment_id).show();
+    });
+<% end %>

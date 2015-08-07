@@ -28,14 +28,14 @@ feature 'upvote to the answer' do
   end
 
   # если всключаю js: true - то вываливается ошибка гема dataTables: No route matches [GET] "/images/sort_both.png"
-  scenario 'authorized user sees and press button Bullshit' do # , js: true do
+  scenario 'authorized user sees and press button Bullshit', js: true do
     sign_in(user2)
     visit question_path(question)
     within ".answer#answer_#{answer.id}" do
       expect(page).to have_link 'Bullshit'
       click_on 'Bullshit'
     end
-    visit question_path(question)
+    #visit question_path(question)
     within ".answer#answer_#{answer.id}" do
       expect(page).to_not have_link 'Bullshit'
       within '.votes_count' do

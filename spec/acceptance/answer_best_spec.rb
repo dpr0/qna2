@@ -28,7 +28,7 @@ feature 'Best answer' do
     end
   end
 
-  describe 'authorized user:' do#, js: true do
+  describe 'authorized user:', js: true do
     background do
       sign_in user
       visit question_path(question)

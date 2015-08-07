@@ -22,7 +22,7 @@ feature 'User answer', ' In order to exchange my knowledge - As an authenticated
     visit question_path(question)
     fill_in 'Your answer', with: 'Text 2'
     click_on 'Ответить'
-    # expect(current_path).to eq question_path(question)
+    # expect(current_path).to eq question_path(question) 
     within '.answers' do
       expect(page).to have_content 'Text 1'
       expect(page).to have_content 'Text 2'
@@ -41,7 +41,7 @@ feature 'User answer', ' In order to exchange my knowledge - As an authenticated
     end
   end
 
-  scenario 'Authenticated user can create answer on the question' do
+  scenario 'Authenticated user can create answer on the question', js: true do
     visit question_path(question)
     fill_in 'Your answer', with: 'text text'
     click_on 'Ответить'

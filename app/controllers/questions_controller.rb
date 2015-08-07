@@ -11,6 +11,8 @@ class QuestionsController < ApplicationController
   def show
     @answer = @question.answers.build
     @answer.attaches.build
+    @comment = @question.comments.build
+
   end
 
   def new
@@ -26,11 +28,13 @@ class QuestionsController < ApplicationController
     # @question.user_id = @user.id
     @question = current_user.questions.new(question_params)
     if @question.save
-      flash[:notice] = 'Ok!'
+      PrivatePub.publish_to "/questions/new", question: @question.to_json
+      #render nothing: true
       redirect_to @question
+      flash[:notice] = 'Ok!'
     else
-      flash[:notice] = 'Error!'
       render :new
+      flash[:notice] = 'Error!'
     end
   end
 
