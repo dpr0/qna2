@@ -6,7 +6,7 @@
     = f.text_area :body, rows: 5, cols: 60
   .attaches_form
     -if @question.new_record?
-      = f.fields_for :attaches do |a|
+      = f.fields_for :attaches, @question.attaches.build do |a|
         = render 'attach_fields', f: a
       .links
         p= link_to_add_association 'add file', f, :attaches

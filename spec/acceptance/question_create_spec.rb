@@ -16,7 +16,7 @@ feature 'Create question', 'In order to get answer from community -  As an authe
     fill_in 'Title', with: 'Text question'
     fill_in 'Body', with: 'text text'
     click_on 'Подать вопрос'
-    expect(page).to have_content 'Ok!'
+    expect(page).to have_content 'Question was successfully created.'
     expect(page).to have_content 'Text question'
     expect(page).to have_content 'text text'
   end
@@ -49,7 +49,7 @@ feature 'Create question', 'In order to get answer from community -  As an authe
     sign_in(user)
     visit question_path(question)
     click_on 'Del?'
-    expect(page).to have_content 'Question delete!'
+    expect(page).to have_content 'Question was successfully destroyed.'
   end
   scenario 'Author cant delete foreign question' do
     sign_in(user)

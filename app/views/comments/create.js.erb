@@ -1,0 +1,2 @@
+var parenSelector = '<%= @parent.is_a?(Question) ? ".question" : "#answer-#{@parent.id}" %>';
+$(parenSelector + ' .comments').html('<%= j render @comment, parent: @parent %>');

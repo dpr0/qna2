@@ -12,10 +12,13 @@ $ ->
   PrivatePub.subscribe '/questions/' + questionId + '/comments', (data, channel) ->
     console.log(data)
     comment = $.parseJSON(data['comment'])
-    $('.question-comments').append(comment.id + ' ' + comment.body);
+    $('.question .comments').append(comment.id + ' ' + comment.body);
+    $('.new_comment #comment_body').val('');
 
   answerId = $('.answer').data('answerId')
+  console.log(data)
   PrivatePub.subscribe '/answers/' + answerId + '/comments', (data, channel) ->
     console.log(data)
     comment = $.parseJSON(data['comment'])
-    $('.answer-comments').append(comment.id + ' ' + comment.body);
+    $('.answer #answer_' + answerId + ' .comments').append(comment.id + ' ' + comment.body);
+    $('.new_comment #comment_body').val('');

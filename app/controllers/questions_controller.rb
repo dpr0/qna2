@@ -3,63 +3,45 @@ class QuestionsController < ApplicationController
 
   before_action :authenticate_user!, except: [:index, :show]
   before_action :load_question, only: [:show, :edit, :update, :destroy, :perfect, :bullshit, :cancel]
+  before_action :build_answer, only: [:show]
+
+  respond_to :json
 
   def index
-    @questions = Question.all
+    respond_with(@questions = Question.all)
   end
 
   def show
-    @answer = @question.answers.build
-    @answer.attaches.build
-    @comment = @question.comments.build
-
+    respond_with @question
   end
 
   def new
-    @question = Question.new
-    @question.attaches.build
+    respond_with (@question = Question.new)
   end
 
   def edit
   end
 
   def create
-    @question = Question.new(question_params)
-    # @question.user_id = @user.id
-    @question = current_user.questions.new(question_params)
-    if @question.save
-      PrivatePub.publish_to "/questions/new", question: @question.to_json
-      #render nothing: true
-      redirect_to @question
-      flash[:notice] = 'Ok!'
-    else
-      render :new
-      flash[:notice] = 'Error!'
-    end
+    respond_with (@question = current_user.questions.create(question_params))
+    PrivatePub.publish_to "/questions/new", question: @question.to_json if @question.save
   end
 
   def update
-    if @question.update(question_params)
-      flash[:notice] = 'Ok!'
-      redirect_to @question
-    else
-      flash[:notice] = 'Error!'
-      render :edit
-    end
+    @question.update(question_params)
+    respond_with @question
   end
 
   def destroy
-    if @question.user_id == current_user.id
-      @question.destroy
-      flash[:notice] = 'Question delete!'
-      redirect_to questions_path
-    else
-      flash[:notice] = 'not your question'
-      render :show
-    end
+    #if @question.user_id == current_user.id
+    respond_with (@question.destroy)
   end
 
   private
+
+  def build_answer
+    @answer = @question.answers.build
+  end
 
   def load_question
     @question = Question.find(params[:id])

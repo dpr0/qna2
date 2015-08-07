@@ -20,6 +20,7 @@ gem 'remotipart'
 gem 'cocoon'
 gem 'private_pub'
 gem 'thin'
+gem 'responders'
 # gem 'activerecord-postgres-hstore'
 
 # gem 'bcrypt', '~> 3.1.7'           # Use ActiveModel has_secure_password

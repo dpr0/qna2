@@ -37,12 +37,5 @@
                 p= link_to_add_association 'add file', f, :attaches
           .answer_text_body
             = f.submit 'Сохранить'
-    .answer-comments
-      = render answer.comments
-      = form_for [answer, @comment], remote: true do |f|
-        .comment_text_body
-          = f.label :body, 'Текст Комментария:'
-          = f.text_area :body, size: "30"
-          = f.submit 'Комментировать'
-
-= subscribe_to "/answers/#{answer.id}/comments"
+    .comments
+      = render 'comments/list', parent: answer
