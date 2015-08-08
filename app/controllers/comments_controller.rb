@@ -5,8 +5,8 @@ class CommentsController < ApplicationController
   before_action :load_comment, only: [:update, :destroy]
   after_action :publish_comment, only: [:create]
 
-  respond_to :js
   respond_to :json, only: :create
+  respond_to :js
 
   def update
     @comment.update(comment_params)
@@ -39,5 +39,4 @@ class CommentsController < ApplicationController
   def comment_params
     params.require(:comment).permit(:body).merge(user_id: current_user.id)
   end
-
 end

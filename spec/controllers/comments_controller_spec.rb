@@ -2,8 +2,11 @@ require 'rails_helper'
 
 RSpec.describe CommentsController, type: :controller do
 		let(:user) { create(:user) }
+    let(:user2) { create(:user) }
 		let(:question) { create(:question, user: user) }
 		let(:answer) { create(:answer, user: user, question: question) }
+    let(:comment) { create(:comment, user: user, question: question) }
+    let(:comment2) { create(:comment, user: user, answer: answer) }    
 	describe '#POST create' do
 		sign_in_user
 		it 'loads question if parent is question' do
@@ -38,5 +41,16 @@ RSpec.describe CommentsController, type: :controller do
     end
   end
 
+  describe 'DELETE #destroy' do
+    before { comment }
+    it 'deletes comment' do
+      sign_in(user)
+      expect { delete :destroy, id: comment, format: :js }.to change(Comment, :count).by(-1)
+    end
+    it 'user cant delete another user answer' do
+      sign_in(user2)
+      expect { delete :destroy, id: comment.id, format: :js }.to_not change(Comment, :count)
+    end
+  end
 
 end
