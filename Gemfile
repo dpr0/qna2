@@ -12,8 +12,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc  # bundle exec rake doc:rails generates the 
 gem 'slim-rails'
 gem 'devise'
 gem 'bootstrap-sass'
-#gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
-gem 'jquery-datatables-rails', '~> 3.3.0'
+gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 gem 'jquery-ui-rails'
 gem 'carrierwave'
 gem 'remotipart'
@@ -24,9 +23,8 @@ gem 'responders'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-vkontakte'
-
+gem 'handlebars_assets'
 # gem 'activerecord-postgres-hstore'
-
 # gem 'bcrypt', '~> 3.1.7'           # Use ActiveModel has_secure_password
 # gem 'unicorn'                      # Use Unicorn as the app server
 # gem 'capistrano-rails'             # Use Capistrano for deployment
@@ -40,7 +38,7 @@ group :development, :test do
   gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger'
   gem 'pry'
   gem 'better_errors'
-  # gem 'selenium-webdriver'
+# gem 'selenium-webdriver'
   gem 'database_cleaner'
   gem 'capybara-webkit'
 end
