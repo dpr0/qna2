@@ -39,14 +39,9 @@
       = link_to a.file.identifier, a.file.url
       - if current_user && @question.user_id == current_user.id
         = link_to "Удалить #{a.file.identifier}?", attach_path(a), method: :delete, class: 'btn btn-danger btn-xs', data: {confirm: "Подтверждение удаления"}, remote: true
-p Комментарии:
-.question-comments
-  = render @question.comments
-  = form_for [@question, @comment], remote: true do |f|
-    .comment_text_body
-      = f.label :body, 'Текст Комментария:'
-      = f.text_area :body, size: "30"
-      = f.submit 'Комментировать'
+  p Комментарии:
+  .comments
+    = render 'comments/list', parent: @question
 
 .answers
   = render @question.answers.firstbest
@@ -56,12 +51,13 @@ p Комментарии:
     = f.label :body, 'Your answer'
     = f.text_area :body, size: "40"
   .answer_attach
-    = f.fields_for :attaches do |a|
+    = f.fields_for :attaches, @answer.attaches.build do |a|
       = render 'attach_fields', f: a
       = link_to_add_association 'add file', f, :attaches
   .answer_text_body
     = f.submit 'Ответить'
 .answer-errors
+.comments-errors
 
 = subscribe_to "/questions/#{@question.id}/answers"
 = subscribe_to "/questions/#{@question.id}/comments"

@@ -1,48 +1,42 @@
 class CommentsController < ApplicationController
 
   before_action :authenticate_user!
-  before_action :load_commentable, only: [:create]
+  before_action :load_parent, only: :create
+  before_action :load_comment, only: [:update, :destroy]
+  after_action :publish_comment, only: [:create]
+
+  respond_to :json, only: :create
+  respond_to :js
 
   def update
-    @comment = Comment.find(params[:id])
     @comment.update(comment_params)
-  #  @question = @answer.question
+    respond_with @comment
   end
 
   def create
-    @comment = @commentable.comments.build(comment_params)
-    @comment.user = current_user
-    if @comment.save
-      if params[:question_id]
-        PrivatePub.publish_to "/questions/#{@question.id}/comments", comment: @comment.to_json
-      else
-        PrivatePub.publish_to "/answers/#{@answer.id}/comments", comment: @comment.to_json
-      end
-      render nothing: true
-    else
-      render json: @comment.errors.full_messages.join("\n"), status: :unprocessable_entity
-    end
+    respond_with(@comment = @parent.comments.create(comment_params))
   end
 
   def destroy
-    @comment = Comment.find(params[:id])
-    @comment.destroy if @comment.user_id == current_user.id
+    respond_with (@comment.destroy)
   end
 
   private
 
-  def load_commentable
-    if params[:question_id]
-      @commentable = Question.find(params[:question_id])
-      @question = @commentable
-    else
-      @commentable = Answer.find(params[:answer_id])
-      @answer = @commentable
-    end
+  def publish_comment
+    PrivatePub.publish_to "/#{@parent.class.to_s.pluralize.underscore}/#{@parent.id}/comments", comment: @comment.to_json
+  end
+
+  def load_comment
+    @comment = Comment.find(params[:id])
+  end
+
+  def load_parent
+    @parent = Question.find(params[:question_id]) if params[:question_id]
+    @parent ||= Answer.find(params[:answer_id])
   end
 
   def comment_params
-    params.require(:comment).permit(:body)
+    params.require(:comment).permit(:body).merge(user_id: current_user.id)
   end
-
 end

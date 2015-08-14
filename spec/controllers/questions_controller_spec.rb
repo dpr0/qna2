@@ -53,7 +53,7 @@ RSpec.describe QuestionsController, type: :controller do
     it 'assings the requested question to @question' do
       expect(assigns(:question)).to eq question
     end
-
+    
     it 'build new attach for answer' do
       expect(assigns(:answer).attaches.first).to be_a_new(Attach)
     end
@@ -73,9 +73,11 @@ RSpec.describe QuestionsController, type: :controller do
     it 'assigns a new Question to @question' do
       expect(assigns(:question)).to be_a_new(Question)
     end
+
     it 'build new attach for question' do
       expect(assigns(:question).attaches.first).to be_a_new(Attach)
     end
+
     it 'renders new view' do
       expect(response).to render_template :new
     end
