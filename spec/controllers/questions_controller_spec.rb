@@ -10,18 +10,18 @@ RSpec.describe QuestionsController, type: :controller do
     sign_in_user
 
     it 'choose perfect question' do
-      post :perfect, id: question, format: :js      
+      post :perfect, id: question, format: :js
       question.reload
       expect(question.votes_count).to eq 1
     end
     it 'choose bullshit question' do
-      post :bullshit, id: question, format: :js      
+      post :bullshit, id: question, format: :js
       question.reload
       expect(question.votes_count).to eq -1
     end
     it 'choose cancel question' do
-      post :perfect, id: question, format: :js      
-      post :cancel, id: question, format: :js      
+      post :perfect, id: question, format: :js
+      post :cancel, id: question, format: :js
       question.reload
       expect(question.votes_count).to eq 0
     end
@@ -32,7 +32,7 @@ RSpec.describe QuestionsController, type: :controller do
       expect(post :bullshit, id: question, format: :js).to render_template :bullshit
     end
     it 'Render question :cancel' do
-      post :perfect, id: question, format: :js      
+      post :perfect, id: question, format: :js
       expect(post :cancel, id: question, format: :js).to render_template :cancel
     end
   end
@@ -53,7 +53,7 @@ RSpec.describe QuestionsController, type: :controller do
     it 'assings the requested question to @question' do
       expect(assigns(:question)).to eq question
     end
-    
+
     it 'build new attach for answer' do
       expect(assigns(:answer).attaches.first).to be_a_new(Attach)
     end

@@ -19,5 +19,5 @@ $ ->
   PrivatePub.subscribe '/answers/' + answerId + '/comments', (data, channel) ->
     console.log(data)
     comment = $.parseJSON(data['comment'])
-    $('.answers .aswer .comments #' + answerId).append(comment.id + ' ' + comment.body);
-    $('.new_comment #comment_body').val('');
+    $('.answers .answer#' + answerId + ' .comments #' + answerId).append(comment.id + ' ' + comment.body);
+    $('.answers .new_comment #comment_body').val('');

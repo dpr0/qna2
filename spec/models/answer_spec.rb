@@ -13,9 +13,9 @@ RSpec.describe Answer, type: :model do
   it { should have_many(:comments).dependent(:destroy) }
 
   let(:question) { create(:question) }
-  let(:user) { create(:user ) }
-  let(:answer) { create(:answer, question: question ) }
-  let(:answer2) { create(:answer, question: question ) }
+  let(:user) { create(:user) }
+  let(:answer) { create(:answer, question: question) }
+  let(:answer2) { create(:answer, question: question) }
 
   describe 'votes' do
     it 'choose perfect vote for answer' do
@@ -34,7 +34,6 @@ RSpec.describe Answer, type: :model do
       answer.cancel(user)
       expect(answer.votes_count).to eq 0
     end
-      
   end
 
   describe 'best answer' do

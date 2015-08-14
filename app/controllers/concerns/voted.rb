@@ -12,7 +12,7 @@ module Voted
   end
 
   def bullshit
-     @votable.bullshit(current_user)
+    @votable.bullshit(current_user)
   end
 
   def cancel

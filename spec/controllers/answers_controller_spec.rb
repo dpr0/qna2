@@ -11,24 +11,24 @@ RSpec.describe AnswersController, type: :controller do
     sign_in_user
 
     it 'choose perfect answer' do
-      post :perfect, id: answer, format: :js      
+      post :perfect, id: answer, format: :js
       answer.reload
       expect(answer.votes_count).to eq 1
     end
     it 'choose bullshit answer' do
-      post :bullshit, id: answer, format: :js      
+      post :bullshit, id: answer, format: :js
       answer.reload
       expect(answer.votes_count).to eq -1
     end
     it 'choose perfect answer' do
-      post :perfect, id: answer, format: :js      
-      post :cancel, id: answer, format: :js      
+      post :perfect, id: answer, format: :js
+      post :cancel, id: answer, format: :js
       answer.reload
       expect(answer.votes_count).to eq 0
     end
 
     it 'Render answer :perfect' do
-      expect(post :perfect, id:  answer, format: :js).to render_template :perfect
+      expect(post :perfect, id: answer, format: :js).to render_template :perfect
     end
     it 'Render answer :bullshit' do
       expect(post :bullshit, id: answer, format: :js).to render_template :bullshit
@@ -86,7 +86,7 @@ RSpec.describe AnswersController, type: :controller do
         expect { post :create, question_id: question, answer: attributes_for(:answer), format: :js }.to change(question.answers, :count).by(1)
       end
       it 'render create template' do
-        #expect(response).to render_template :create
+        # expect(response).to render_template :create
       end
     end
 

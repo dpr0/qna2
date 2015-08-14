@@ -4,6 +4,8 @@ RSpec.configure do |config|
   Capybara.javascript_driver = :webkit
   config.include AcceptanceMacros, type: :feature
   config.use_transactional_fixtures = false
+  config.include(OmniauthMacros)
+  OmniAuth.config.test_mode = true
 
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)

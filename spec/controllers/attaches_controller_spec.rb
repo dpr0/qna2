@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe AttachesController, type: :controller do
-  let(:user)    { create(:user) }
+  let(:user) { create(:user) }
   let(:question) { create(:question, user: user) }
-  let(:answer)  { create(:answer, user: user, question: question) }
+  let(:answer) { create(:answer, user: user, question: question) }
   let(:q_attach) { create(:attach, attachable: question) }
   let(:a_attach) { create(:attach, attachable: answer) }
 

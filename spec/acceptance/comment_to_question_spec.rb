@@ -7,7 +7,7 @@ feature 'User create comment to question' do
   given(:question2) { create(:question, user: user2) }
   given(:answer) { create(:answer, user: user, question: question) }
   given(:answer2) { create(:answer, user: user2, question: question2) }
-  
+
   background { sign_in user }
   scenario 'User try to create invalid comment', js: true do
     visit question_path(question)
