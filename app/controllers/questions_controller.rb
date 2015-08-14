@@ -24,7 +24,7 @@ class QuestionsController < ApplicationController
 
   def create
     respond_with (@question = current_user.questions.create(question_params))
-    PrivatePub.publish_to "/questions/new", question: @question.to_json if @question.save
+    PrivatePub.publish_to '/questions/new', question: @question.to_json if @question.save
   end
 
   def update
@@ -33,7 +33,7 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    #if @question.user_id == current_user.id
+    # if @question.user_id == current_user.id
     respond_with (@question.destroy)
   end
 

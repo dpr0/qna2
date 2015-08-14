@@ -35,7 +35,7 @@ feature 'upvote to the answer' do
       expect(page).to have_link 'Bullshit'
       click_on 'Bullshit'
     end
-    #visit question_path(question)
+    # visit question_path(question)
     within ".answer#answer_#{answer.id}" do
       expect(page).to_not have_link 'Bullshit'
       within '.votes_count' do

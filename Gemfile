@@ -38,7 +38,7 @@ group :development, :test do
   gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger'
   gem 'pry'
   gem 'better_errors'
-# gem 'selenium-webdriver'
+  # gem 'selenium-webdriver'
   gem 'database_cleaner'
   gem 'capybara-webkit'
 end

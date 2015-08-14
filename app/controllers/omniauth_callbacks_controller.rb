@@ -1,5 +1,4 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
-
   def facebook
     omniauth_provider('FACEBOOK')
   end
@@ -11,7 +10,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   private
 
   def omniauth_provider(provider_name)
-    #render json: request.env['omniauth.auth']
+    # render json: request.env['omniauth.auth']
     @user = User.find_for_oauth(request.env['omniauth.auth'])
     if @user.persisted?
       sign_in_and_redirect @user, event: :authentication

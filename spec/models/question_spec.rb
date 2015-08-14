@@ -14,7 +14,7 @@ RSpec.describe Question, type: :model do
   it { should have_many(:comments).dependent(:destroy) }
 
   let(:question) { create(:question) }
-  let(:user) { create(:user ) }
+  let(:user) { create(:user) }
 
   describe 'votes' do
     it 'choose perfect vote for question' do
