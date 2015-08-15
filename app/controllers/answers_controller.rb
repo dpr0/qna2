@@ -9,6 +9,8 @@ class AnswersController < ApplicationController
   respond_to :js
   respond_to :json, only: :create
 
+  authorize_resource
+
   def update
     @answer.update(answer_params)
     respond_with @answer

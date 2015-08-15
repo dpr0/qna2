@@ -7,6 +7,8 @@ class CommentsController < ApplicationController
   respond_to :json, only: :create
   respond_to :js
 
+  authorize_resource
+
   def update
     @comment.update(comment_params)
     respond_with @comment
