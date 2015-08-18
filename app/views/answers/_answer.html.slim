@@ -22,8 +22,9 @@
         b 'best answer'
       - else
         = link_to('Best', best_answer_path(answer), method: :post, remote: true, class: 'btn btn-primary btn-xs best-answer-link')
-    - if can?([:update, :destroy], answer)
+    - if can?(:edit, answer)
       = link_to 'Редактировать ответ?', '', class: 'btn btn-default btn-xs edit-answer-link', data: { answer_id: answer.id }, remote: true
+    - if can?(:destroy, answer)
       = link_to 'Del answer?', answer, method: :delete, class: 'btn btn-danger btn-xs', data: {confirm: "Подтверждение удаления"}, remote: true
       = form_for answer, method: "patch", remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
         .answer_text_body
