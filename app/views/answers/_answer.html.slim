@@ -6,24 +6,25 @@
     - answer.attaches.each do |a|
       b id="attach_#{a.id}"
         = link_to a.file.identifier, a.file.url
-        - if current_user && answer.user_id == current_user.id
+        - if can?(:destroy, a)
           = link_to "Удалить #{a.file.identifier}?", attach_path(a), method: :delete, class: 'btn btn-danger btn-xs', data: {confirm: "Подтверждение удаления"}, remote: true
     b class="votes_count"
       =" #{answer.votes.sum("score")} / #{answer.votes_count} "
-    - if current_user && current_user.id != answer.user_id
-      - if current_user.voted_for?(answer)
-        = link_to("Cancel vote", cancel_answer_path(answer), method: :post, remote: true, class: 'btn btn-danger btn-xs best-answer-link')
-      - else
-        = link_to("Perfect", perfect_answer_path(answer), method: :post, remote: true, class: 'btn btn-primary btn-xs best-answer-link')
-        i &nbsp;or&nbsp;
-        = link_to("Bullshit", bullshit_answer_path(answer), method: :post, remote: true, class: 'btn btn-primary btn-xs best-answer-link')
-    - if current_user && @question.user_id == current_user.id
+    - if can?( :cancel, answer )
+      = link_to("Cancel vote", cancel_answer_path(answer), method: :post, remote: true, class: 'btn btn-danger btn-xs best-answer-link')
+    - if can?( :perfect, answer )
+      = link_to("Perfect", perfect_answer_path(answer), method: :post, remote: true, class: 'btn btn-primary btn-xs best-answer-link')
+      i &nbsp;or&nbsp;
+    - if can?( :bullshit, answer )
+      = link_to("Bullshit", bullshit_answer_path(answer), method: :post, remote: true, class: 'btn btn-primary btn-xs best-answer-link')
+    - if can?(:best, answer)
       - if answer.best
         b 'best answer'
       - else
         = link_to('Best', best_answer_path(answer), method: :post, remote: true, class: 'btn btn-primary btn-xs best-answer-link')
-    - if current_user && answer.user_id == current_user.id
+    - if can?(:edit, answer)
       = link_to 'Редактировать ответ?', '', class: 'btn btn-default btn-xs edit-answer-link', data: { answer_id: answer.id }, remote: true
+    - if can?(:destroy, answer)
       = link_to 'Del answer?', answer, method: :delete, class: 'btn btn-danger btn-xs', data: {confirm: "Подтверждение удаления"}, remote: true
       = form_for answer, method: "patch", remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
         .answer_text_body

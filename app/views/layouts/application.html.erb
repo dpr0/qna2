@@ -7,9 +7,9 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-    <% if current_user %>
         <%= link_to "Главная", questions_path %> |
-        <%= link_to "Задать вопрос", new_question_path %> |
+    <% if current_user %>
+        <%= link_to "Задать вопрос", new_question_path if can?(:create, Question) %> |
         <%= current_user.email %> |
         <%= link_to "Выйти", destroy_user_session_path, method: :delete %>
     <% else %>

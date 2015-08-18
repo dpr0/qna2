@@ -22,8 +22,11 @@ gem 'thin'
 gem 'responders'
 gem 'omniauth'
 gem 'omniauth-facebook'
+gem 'omniauth-twitter'
 gem 'omniauth-vkontakte'
 gem 'handlebars_assets'
+gem 'cancancan'
+# gem 'pundit'
 # gem 'activerecord-postgres-hstore'
 # gem 'bcrypt', '~> 3.1.7'           # Use ActiveModel has_secure_password
 # gem 'unicorn'                      # Use Unicorn as the app server

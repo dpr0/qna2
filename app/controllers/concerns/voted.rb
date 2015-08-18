@@ -8,14 +8,17 @@ module Voted
   end
 
   def perfect
+    #authorize! :perfect, @votable
     @votable.perfect(current_user)
   end
 
   def bullshit
+    #authorize! :bullshit, @votable
     @votable.bullshit(current_user)
   end
 
   def cancel
+    #authorize! :cancel, @votable
     @votable.cancel(current_user)
   end
 

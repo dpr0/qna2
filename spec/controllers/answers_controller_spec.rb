@@ -41,8 +41,10 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'best answer' do
     sign_in_user
-    before { post :best, id: answer, question_id: question, format: :js }
-
+    before do
+      question.update! user: @user
+      post :best, id: answer, question_id: question, format: :js
+    end
     it 'choose best answer' do
       answer.reload
       expect(answer.best).to eq true
@@ -55,6 +57,10 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'PATCH #update' do
     sign_in_user
+    before do
+      answer.update! user: @user
+    end
+
     it 'assings the requested answer to @answer' do
       patch :update, id: answer, answer: attributes_for(:answer), format: :js
       expect(assigns(:answer)).to eq answer

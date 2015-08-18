@@ -1,6 +1,4 @@
-p= link_to 'Ask question', new_question_path
 - unless @questions.empty?
-
   div class="panel panel-default"
     div class="panel-heading" Список вопросов:
     table class="table" id="questions"
@@ -19,5 +17,4 @@ p= link_to 'Ask question', new_question_path
             = render 'questions_list', question: question
 - else
   h4 Еще нет вопросов
-
 = subscribe_to "/questions/new"

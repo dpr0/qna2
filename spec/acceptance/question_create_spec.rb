@@ -12,7 +12,7 @@ feature 'Create question', 'In order to get answer from community -  As an authe
   scenario 'Authenticated user creates question' do
     sign_in(user)
     visit questions_path
-    click_on 'Ask question'
+    click_on 'Задать вопрос'
     fill_in 'Title', with: 'Text question'
     fill_in 'Body', with: 'text text'
     click_on 'Подать вопрос'
@@ -23,7 +23,7 @@ feature 'Create question', 'In order to get answer from community -  As an authe
 
   scenario 'Non-authenticated user try to create question' do
     visit questions_path
-    click_on 'Ask question'
+    click_on 'Задать вопрос'
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end
 

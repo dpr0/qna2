@@ -5,8 +5,8 @@ RSpec.describe CommentsController, type: :controller do
   let(:user2) { create(:user) }
   let(:question) { create(:question, user: user) }
   let(:answer) { create(:answer, user: user, question: question) }
-  let(:comment) { create(:comment, user: user, question: question) }
-  let(:comment2) { create(:comment, user: user, answer: answer) }
+  let(:comment) { create(:comment, user: user, commentable: question) }
+  let(:comment2) { create(:comment, user: user, commentable: answer) }
   describe '#POST create' do
     sign_in_user
     it 'loads question if parent is question' do
