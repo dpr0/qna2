@@ -7,14 +7,13 @@ td
   div class="votes_count"
     = "#{question.votes.sum("score")} / #{question.votes_count}"
 td
-  - if current_user
-    - if current_user.id != question.user_id
-      - if current_user.voted_for?(question)
-        = link_to("Cancel vote", cancel_question_path(question), method: :post, remote: true, class: 'btn btn-danger btn-xs best-answer-link')
-      - else
-        = link_to("Perfect", perfect_question_path(question), method: :post, remote: true, class: 'btn btn-primary btn-xs best-answer-link')
-        i &nbsp;or&nbsp;
-        = link_to("Bullshit", bullshit_question_path(question), method: :post, remote: true, class: 'btn btn-primary btn-xs best-answer-link')
-    - else
-      i= link_to " Edit? ", edit_question_path(question)
-      i= link_to " Del? ", question, method: :delete, data: {confirm: "Подтверждение удаления"}
+  - if can?(:cancel, question)
+    = link_to("Cancel vote", cancel_question_path(question), method: :post, remote: true, class: 'btn btn-danger btn-xs best-answer-link')
+  - if can?(:perfect, question) && can?(:bullshit, question)
+    = link_to("Perfect", perfect_question_path(question), method: :post, remote: true, class: 'btn btn-primary btn-xs best-answer-link')
+    i &nbsp;or&nbsp;
+    = link_to("Bullshit", bullshit_question_path(question), method: :post, remote: true, class: 'btn btn-primary btn-xs best-answer-link')
+  - if can?(:edit, question)
+    i= link_to " Edit? ", edit_question_path(question)
+  - if can?(:destroy, question)
+    i= link_to " Del? ", question, method: :delete, data: {confirm: "Подтверждение удаления"}

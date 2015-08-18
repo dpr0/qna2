@@ -22,7 +22,7 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    @answer.destroy if @answer.user_id == current_user.id
+    @answer.destroy
   end
 
   def best

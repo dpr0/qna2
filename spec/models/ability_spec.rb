@@ -13,13 +13,13 @@ describe Ability do
 		it { should_not be_able_to :manage, :all }		
 	end
 
-	describe 'for guest' do
+	describe 'for admin' do
 		let(:user) { create :user, admin: 1 }
 		
 		it { should be_able_to :manage, :all }
 	end
 
-	describe 'for guest' do
+	describe 'for user' do
 		let(:user) { create :user }
 		let(:user2) { create :user }
 		let(:question1) { create(:question, user: user) }
