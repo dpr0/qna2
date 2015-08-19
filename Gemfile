@@ -25,8 +25,8 @@ gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 gem 'omniauth-vkontakte'
 gem 'handlebars_assets'
-gem 'cancancan'
-# gem 'pundit'
+gem 'cancancan' # gem 'pundit'
+gem 'doorkeeper'
 # gem 'activerecord-postgres-hstore'
 # gem 'bcrypt', '~> 3.1.7'           # Use ActiveModel has_secure_password
 # gem 'unicorn'                      # Use Unicorn as the app server
@@ -49,4 +49,5 @@ group :test do
   gem 'shoulda-matchers'
   gem 'capybara'
   gem 'launchy'
+  gem 'json_spec'
 end
