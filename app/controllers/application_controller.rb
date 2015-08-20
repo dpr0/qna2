@@ -1,7 +1,7 @@
 require 'application_responder'
 
 class ApplicationController < ActionController::Base
-  #include Pundit
+  check_authorization unless: :devise_controller?
 
   self.responder = ApplicationResponder
   respond_to :html
@@ -14,5 +14,4 @@ class ApplicationController < ActionController::Base
     redirect_to root_url, alert: exception.message
   end
 
-  check_authorization unless: :devise_controller?
 end
