@@ -24,7 +24,8 @@ class Ability
     guest_abilities
     can :create, [Question, Answer, Comment]
     can [:update, :edit, :destroy], [Question, Answer, Comment], user: user
-    can [:me, :users], User, user: user
+    can :index, User
+    can :me, User, id: user.id
     can :destroy, Attach, attachable: { user: user }
 
     can :best, Answer do |answer|
