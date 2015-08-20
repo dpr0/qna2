@@ -21,7 +21,7 @@ feature 'files to question' do
   scenario 'The authenticated user delete file from question' do
     visit question_path(attach.attachable)
     expect(page).to have_link 'rails_helper.rb', href: '/uploads/attach/file/2/rails_helper.rb'
-    click_on "Удалить rails_helper.rb?"
+    click_on 'Удалить rails_helper.rb?'
     expect(page).to_not have_link 'rails_helper.rb', href: '/uploads/attach/file/2/rails_helper.rb'
   end
 
@@ -40,5 +40,4 @@ feature 'files to question' do
     expect(page).to have_link 'rails_helper.rb', href: '/uploads/attach/file/4/rails_helper.rb'
     expect(page).to have_link 'rails_helper.rb', href: '/uploads/attach/file/5/rails_helper.rb'
   end
-
 end

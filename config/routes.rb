@@ -26,7 +26,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resource :profiles do
         get :me, on: :collection
-        get :users, on: :collection#, to: "api#v1#profiles#users"
+        get :users, on: :collection # , to: "api#v1#profiles#users"
       end
     end
   end

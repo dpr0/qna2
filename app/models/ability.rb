@@ -38,6 +38,5 @@ class Ability
     can [:perfect, :bullshit], [Question, Answer] do |votable|
       votable.user != user && !user.voted_for?(votable)
     end
-
   end
 end

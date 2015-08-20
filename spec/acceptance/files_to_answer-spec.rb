@@ -20,14 +20,14 @@ feature 'Add files to answer' do
   end
 
   scenario 'The authenticated user delete file from answer', js: true do
-  fill_in 'Your answer', with: 'text text'
+    fill_in 'Your answer', with: 'text text'
     attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
     click_on 'Ответить'
     within '.answers' do
       expect(page).to have_link 'spec_helper.rb', href: '/uploads/attach/file/1/spec_helper.rb'
       click_on 'Удалить spec_helper.rb?'
       expect(page).to_not have_link 'spec_helper.rb', href: '/uploads/attach/file/1/spec_helper.rb'
-    end  
+    end
   end
 
   scenario 'the authenticated user adds some files when create answer', js: true do
@@ -45,5 +45,4 @@ feature 'Add files to answer' do
       expect(page).to have_link 'rails_helper.rb', href: '/uploads/attach/file/3/rails_helper.rb'
     end
   end
-  
 end
