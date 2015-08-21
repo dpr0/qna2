@@ -1,10 +1,8 @@
 require_relative 'acceptance_helper'
 
 feature 'Add files to answer' do
-
-  given(:user) {create(:user)}
-  given(:question) {create(:question)}
-
+  given(:user) { create(:user) }
+  given(:question) { create(:question) }
 
   background do
     sign_in(user)
@@ -16,8 +14,7 @@ feature 'Add files to answer' do
     click_on 'Подать вопрос'
     within '.answers' do
       expect(page).to have_link 'spec_helper.rb', href: '/uploads/attach/file/1/spec_helper.rb'
-      #expect(page).to have_content 'text text'
+      # expect(page).to have_content 'text text'
     end
   end
-
 end

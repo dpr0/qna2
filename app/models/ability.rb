@@ -24,6 +24,8 @@ class Ability
     guest_abilities
     can :create, [Question, Answer, Comment]
     can [:update, :edit, :destroy], [Question, Answer, Comment], user: user
+    can :index, User
+    can :me, User, id: user.id
     can :destroy, Attach, attachable: { user: user }
 
     can :best, Answer do |answer|
@@ -37,6 +39,5 @@ class Ability
     can [:perfect, :bullshit], [Question, Answer] do |votable|
       votable.user != user && !user.voted_for?(votable)
     end
-
   end
 end
