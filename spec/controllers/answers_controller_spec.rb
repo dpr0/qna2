@@ -92,7 +92,7 @@ RSpec.describe AnswersController, type: :controller do
         expect { post :create, question_id: question, answer: attributes_for(:answer), format: :js }.to change(question.answers, :count).by(1)
       end
       it 'render create template' do
-        # expect(response).to render_template :create
+        expect(response).to render_template :create
       end
     end
 
@@ -105,17 +105,17 @@ RSpec.describe AnswersController, type: :controller do
         expect(response).to render_template :create
       end
     end
+  end
 
-    describe 'DELETE #destroy' do
-      before { answer }
-      it 'deletes answer' do
-        sign_in(user)
-        expect { delete :destroy, id: answer, format: :js }.to change(Answer, :count).by(-1)
-      end
-      it 'user cant delete another user answer' do
-        sign_in(user2)
-        expect { delete :destroy, id: answer.id, format: :js }.to_not change(question.answers, :count)
-      end
+  describe 'DELETE #destroy' do
+    before { answer }
+    it 'deletes answer' do
+      sign_in(user)
+      expect { delete :destroy, id: answer, format: :js }.to change(Answer, :count).by(-1)
+    end
+    it 'user cant delete another user answer' do
+      sign_in(user2)
+      expect { delete :destroy, id: answer.id, format: :js }.to_not change(question.answers, :count)
     end
   end
 end
