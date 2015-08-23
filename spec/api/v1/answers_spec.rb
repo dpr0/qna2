@@ -8,18 +8,18 @@ describe 'Answer API' do
   describe 'GET /answers' do
     context 'unauthorized' do
       it "return status 401 if no access token" do
-        get '/api/v1/answers', format: :json
+        get "/api/v1/questions/#{question.id}/answers", format: :json
         expect(response.status).to eq 401
       end
       it "return status 401 if invalid access token" do
-        get '/api/v1/answers', format: :json, access_token: '634532'
+        get "/api/v1/questions/#{question.id}/answers", format: :json, access_token: '634532'
         expect(response.status).to eq 401
       end
     end
 
     context 'authorized' do
       let!(:answers) { create_list(:answer, 2, question: question) }
-      before { get '/api/v1/answers', format: :json, access_token: access_token.token}
+      before { get "/api/v1/questions/#{question.id}/answers", format: :json, access_token: access_token.token}
 
       it 'return status 200' do
         expect(response).to be_success
@@ -37,24 +37,24 @@ describe 'Answer API' do
     end
   end
 
-  describe 'GET /answers/:id' do
+  describe 'GET /questions/:id/answers/:id' do
     let(:answer) { create(:answer, question: question) }
     let!(:comments) { create_list(:comment, 2, commentable: answer) }
     let!(:attaches) { create_list(:attach, 2, attachable: answer) }
 
     context 'unauthorized' do
       it "return 401 status if no access token" do
-        get "/api/v1/answers/#{answer.id}", format: :json
+        get "/api/v1/questions/#{question.id}/answers/#{answer.id}", format: :json
         expect(response.status).to eq 401
       end
       it "return 401 status if non valid access token" do
-        get "/api/v1/answers/#{answer.id}", format: :json, access_token: '1234'
+        get "/api/v1/questions/#{question.id}/answers/#{answer.id}", format: :json, access_token: '1234'
         expect(response.status).to eq 401
       end
     end
 
     context 'authorized' do
-      before { get "/api/v1/answers/#{answer.id}", format: :json, access_token: access_token.token }
+      before { get "/api/v1/questions/#{question.id}/answers/#{answer.id}", format: :json, access_token: access_token.token }
 
       it 'return 200 status' do
         expect(response).to be_success
@@ -96,28 +96,25 @@ describe 'Answer API' do
   
   describe 'POST /answers' do
     context 'valid attributes' do
-      before { post '/api/v1/answers', question: question, answer: attributes_for(:answer), format: :json, access_token: access_token.token }
-      
+      before { post "/api/v1/questions/#{question.id}/answers", question: question, answer: attributes_for(:answer), format: :json, access_token: access_token.token }
+      it 'create' do
+        expect { post "/api/v1/questions/#{question.id}/answers", format: :json, answer: attributes_for(:answer), access_token: access_token.token }.to change(Answer, :count).by(1)
+      end
       it 'returns status 201' do
         expect(response.status).to eq 201
-        #expect(response).to have_http_status :created
-      end
-
-      it 'create' do
-        expect(response).to change(Answer, :count).by(1)
+        expect(response).to have_http_status :created
       end
     end 
 
     context 'invalid attributes' do
-      before { post '/api/v1/answers', question: question, answer: attributes_for(:invalid_answer), format: :json, access_token: access_token.token }
-      
+      before { post "/api/v1/questions/#{question.id}/answers", question: question, answer: attributes_for(:invalid_answer), format: :json, access_token: access_token.token }
       it 'returns status 422' do
         expect(response.status).to eq 422
-        #expect(response).to have_http_status :unprocessable_entity
+        expect(response).to have_http_status :unprocessable_entity
       end
 
       it 'not create' do
-        expect(response).to_not change(Answer, :count)
+        expect  { post "/api/v1/questions/#{question.id}/answers", format: :json, answer: attributes_for(:invalid_answer), access_token: access_token.token }.to_not change(Answer, :count)
       end
     end
   end

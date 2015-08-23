@@ -101,6 +101,7 @@ describe 'Questions API' do
       end
 
       context 'attaches' do
+        let!(:attaches) { create_list(:attach, 2, attachable: question, attachable_type: 'Question') }
         it 'contains attaches in question' do
           expect(response.body).to have_json_size(2).at_path('question/attaches')
         end
@@ -115,13 +116,13 @@ describe 'Questions API' do
   describe 'POST /questions' do
     context 'valid attributes' do
       before { post '/api/v1/questions', question: attributes_for(:question), format: :json, access_token: access_token.token }
-      #before { post "/api/v1/questions/#{question.id}/answers", answer: attributes_for(:answer), format: :json, access_token: access_token.token }
       it 'returns status 201' do
+        expect(response.status).to eq 201
         expect(response).to have_http_status :created
       end
 
       it 'create' do
-        expect(response).to change(Question, :count).by(1)
+        expect { post '/api/v1/questions', question: attributes_for(:question), format: :json, access_token: access_token.token }.to change(Question, :count).by(1)
       end
     end 
 
@@ -129,11 +130,12 @@ describe 'Questions API' do
       before { post '/api/v1/questions', question: attributes_for(:invalid_question), format: :json, access_token: access_token.token }
       
       it 'returns status 422' do
-        expect(response).to have_http_status :unprocessable_entity
+        expect(response.status).to eq 422
+        #expect(response).to have_http_status :unprocessable_entity
       end
 
       it 'not create' do
-        expect(response).to_not change(Question, :count)
+        expect { post '/api/v1/questions', question: attributes_for(:invalid_question), format: :json, access_token: access_token.token }.to_not change(Question, :count)
       end
     end
   end
