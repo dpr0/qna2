@@ -3,10 +3,6 @@ require 'rails_helper'
 def do_request(options={})
   get api_way, {format: :json}.merge(options)
 end
-def do_request2
-  perem1
-  perem2
-end
 
 describe 'Questions API' do
   let(:access_token) { create(:access_token) }
@@ -21,10 +17,9 @@ describe 'Questions API' do
 
     context 'authorized' do
       before { get '/api/v1/questions', format: :json, access_token: access_token.token }
-      it_behaves_like "API Authenticable 2" do
-        let(:perem1) { question }
-        let(:perem2) {"questions/0/"}
-      end
+      let(:perem1) { question }
+      let(:perem2) {"questions/0/"}
+      it_behaves_like "API Authenticable 2"
 
       it 'return list of questions' do
         expect(response.body).to have_json_size(2).at_path("questions")
@@ -65,19 +60,16 @@ describe 'Questions API' do
   
     context 'authorized' do
       before { get "/api/v1/questions/#{question.id}", format: :json, access_token: access_token.token }
-      it_behaves_like "API Authenticable 2" do
-        let(:perem1) { question }
-        let(:perem2) {"question/"}
-      end
+      let(:perem1) { question }
+      let(:perem2) {"question/"}
+      it_behaves_like "API Authenticable 2"
 
       it 'contains question' do
         expect(response.body).to have_json_size(1)
       end
 
-      %w(body).each do |attr|
-        it "question contains #{attr}" do
-          expect(response.body).to be_json_eql(question.send(attr.to_sym).to_json).at_path("question/#{attr}")
-        end
+      it "question contains body" do
+        expect(response.body).to be_json_eql(question.send("body".to_sym).to_json).at_path("question/body")
       end
 
       context 'comments' do
@@ -132,5 +124,4 @@ describe 'Questions API' do
       end
     end
   end
-
 end

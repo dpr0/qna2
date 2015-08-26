@@ -14,29 +14,12 @@ RSpec.describe Answer, type: :model do
 
   let(:question) { create(:question) }
   let(:user) { create(:user) }
-  let(:answer) { create(:answer, question: question) }
-  let(:answer2) { create(:answer, question: question) }
-
-  describe 'votes' do
-    it 'choose perfect vote for answer' do
-      answer.perfect(user)
-      answer.reload
-      expect(answer.votes_count).to eq 1
-    end
-    it 'choose bullshit vote for answer' do
-      answer.bullshit(user)
-      answer.reload
-      expect(answer.votes_count).to eq -1
-    end
-    it 'cancel vote for answer' do
-      answer.perfect(user)
-      answer.reload
-      answer.cancel(user)
-      expect(answer.votes_count).to eq 0
-    end
-  end
+  let(:votable) { create(:answer, question: question) }
+  it_behaves_like "votable"
 
   describe 'best answer' do
+    let(:answer) { create(:answer, question: question) }
+    let(:answer2) { create(:answer, question: question) }
     it 'choose best answer' do
       answer.best_answer
       expect(answer.best).to eq true

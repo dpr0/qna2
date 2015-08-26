@@ -18,7 +18,7 @@ RSpec.describe CommentsController, type: :controller do
       expect(assigns(:parent)).to eq answer
     end
   end
-
+  
   describe 'PATCH #update' do
     sign_in_user
     it 'assings the requested answer to @answer' do
