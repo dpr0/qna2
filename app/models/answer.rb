@@ -12,9 +12,19 @@ class Answer < ActiveRecord::Base
 
   scope :firstbest, -> { order('best DESC, created_at') }
 
+  after_create :calculate_reputation
+
   def best_answer
     oldbest = question.answers.find_by(best: true)
     oldbest.update_attributes(best: false) if oldbest
     update_attributes(best: true)
   end
+
+  private
+
+  def calculate_reputation
+    reputation = Reputation.calculate(self)
+    self.user.update(reputation: reputation)
+  end
+
 end

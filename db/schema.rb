@@ -121,7 +121,7 @@ ActiveRecord::Schema.define(version: 20150824191911) do
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
     t.boolean  "admin"
-    t.integer  "reputation"
+    t.integer  "reputation",             default: 0
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

@@ -16,7 +16,7 @@ RSpec.describe Question, type: :model do
   it { should have_many(:votes).dependent(:destroy) }
   it { should have_many(:comments).dependent(:destroy) }
 
-  describe "Reputation" do
+  describe "reputation" do
     let(:user) { create(:user) }
     subject { build(:question, user: user) }
 
@@ -40,6 +40,19 @@ RSpec.describe Question, type: :model do
       allow(Reputation).to receive(:calculate).and_return(5)
       expect { subject.save! }.to change(user, :reputation).by(5)
     end
+  
+    it 'test time' do
+      now = Time.now.utc
+      allow(Time).to receive(:now) { now }
+      subject.save!
+      expect(subject.created_at).to eq now
+    end
+  end
+
+  it 'test double' do
+    question = double(Question, title: '123')
+    allow(Question).to receive(:find) { question }
+    expect(Question.find(1).title).to eq '123'
   end
 
   let(:votable) { create(:question) }

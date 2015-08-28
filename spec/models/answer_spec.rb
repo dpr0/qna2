@@ -17,6 +17,29 @@ RSpec.describe Answer, type: :model do
   let(:votable) { create(:answer, question: question) }
   it_behaves_like "votable"
 
+
+  describe "reputation" do
+    let(:user) { create(:user) }
+    let(:question) { create(:question) }
+    subject { build(:answer, user: user, question: question) }
+
+    it "validate presence of title" do
+      expect(subject.body).to_not be_nil
+      expect(subject.body).to eq "MyAnswer"
+    end
+
+    it "should calculate reputation after create" do
+      expect(Reputation).to receive(:calculate).with(subject)
+      subject.save!
+    end
+
+    it "should not calculate reputation after update" do
+      subject.save!
+      expect(Reputation).to_not receive(:calculate)
+      subject.update(body: '123')
+    end
+  end
+
   describe 'best answer' do
     let(:answer) { create(:answer, question: question) }
     let(:answer2) { create(:answer, question: question) }
