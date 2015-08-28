@@ -14,29 +14,35 @@ RSpec.describe Answer, type: :model do
 
   let(:question) { create(:question) }
   let(:user) { create(:user) }
-  let(:answer) { create(:answer, question: question) }
-  let(:answer2) { create(:answer, question: question) }
+  let(:votable) { create(:answer, question: question) }
+  it_behaves_like "votable"
 
-  describe 'votes' do
-    it 'choose perfect vote for answer' do
-      answer.perfect(user)
-      answer.reload
-      expect(answer.votes_count).to eq 1
+
+  describe "reputation" do
+    let(:user) { create(:user) }
+    let(:question) { create(:question) }
+    subject { build(:answer, user: user, question: question) }
+
+    it "validate presence of title" do
+      expect(subject.body).to_not be_nil
+      expect(subject.body).to eq "MyAnswer"
     end
-    it 'choose bullshit vote for answer' do
-      answer.bullshit(user)
-      answer.reload
-      expect(answer.votes_count).to eq -1
+
+    it "should calculate reputation after create" do
+      expect(Reputation).to receive(:calculate).with(subject)
+      subject.save!
     end
-    it 'cancel vote for answer' do
-      answer.perfect(user)
-      answer.reload
-      answer.cancel(user)
-      expect(answer.votes_count).to eq 0
+
+    it "should not calculate reputation after update" do
+      subject.save!
+      expect(Reputation).to_not receive(:calculate)
+      subject.update(body: '123')
     end
   end
 
   describe 'best answer' do
+    let(:answer) { create(:answer, question: question) }
+    let(:answer2) { create(:answer, question: question) }
     it 'choose best answer' do
       answer.best_answer
       expect(answer.best).to eq true

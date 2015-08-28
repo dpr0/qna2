@@ -6,6 +6,7 @@ RSpec.describe QuestionsController, type: :controller do
   let(:question) { create(:question, user: user) }
   let(:question2) { create(:question, user: user2) }
 
+
   describe 'POST #perfect/bullshit/cancel' do
     sign_in_user
 
@@ -91,6 +92,11 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'POST #create' do
     sign_in_user
+    let(:create_question) { post :create, question: attributes_for(:question) }
+    let(:create_invalid_question) { post :create, question: attributes_for(:invalid_question) }
+    let(:path) { '/questions/new' }
+    it_behaves_like "Publish_to question"
+    
     context 'with valid attributes' do
       it 'question assigns to user' do
         post :create, question: attributes_for(:question)
