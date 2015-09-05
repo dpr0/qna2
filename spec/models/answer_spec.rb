@@ -17,6 +17,18 @@ RSpec.describe Answer, type: :model do
   let(:votable) { create(:answer, question: question) }
   it_behaves_like "votable"
 
+  describe 'question subscribers notifications' do
+    subject { build(:answer) }
+    it 'should call notice job after create' do
+      expect(AnswerNoticeJob).to receive(:perform_later).with(subject)
+      subject.save!
+    end
+    it 'should not call notice job after update' do
+      subject.save!
+      expect(AnswerNoticeJob).to_not receive(:perform_later)
+      subject.touch
+   end
+  end
 
   describe "reputation" do
     let(:user) { create(:user) }

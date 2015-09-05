@@ -7,6 +7,8 @@ RSpec.describe User do
   it { should have_many(:answers).dependent(:destroy) }
   it { should have_many(:votes).dependent(:destroy) }
   it { should have_many(:comments).dependent(:destroy) }
+  it { should have_many(:authorizations).dependent(:destroy) }
+  it { should have_many(:subscriptions).dependent(:destroy) }
 
   describe '.send_daily_digest' do
     let(:users) { create_list(:user, 2) }

@@ -9,7 +9,8 @@ class User < ActiveRecord::Base
   has_many :answers, dependent: :destroy
   has_many :votes, dependent: :destroy
   has_many :comments, dependent: :destroy
-  has_many :authorizations
+  has_many :authorizations, dependent: :destroy
+  has_many :subscriptions, dependent: :destroy
 
   def voted_for?(votable)
     votable.votes.find_by(user: self)

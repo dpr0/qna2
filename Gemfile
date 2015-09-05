@@ -31,7 +31,7 @@ gem 'active_model_serializers'
 gem 'oj'
 gem 'oj_mimic_json'
 #gem 'delayed_job_active_record'
-gem 'whenever'
+#gem 'whenever'
 gem 'sidekiq'
 gem 'sinatra', require: nil
 gem 'sidetiq'
@@ -50,7 +50,7 @@ group :development, :test do
   gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger'
   gem 'pry'
   gem 'better_errors'
-  # gem 'selenium-webdriver'
+# gem 'selenium-webdriver'
   gem 'database_cleaner'
   gem 'capybara-webkit'
 end
@@ -59,4 +59,5 @@ group :test do
   gem 'capybara'
   gem 'launchy'
   gem 'json_spec'
+  gem 'email_spec'
 end

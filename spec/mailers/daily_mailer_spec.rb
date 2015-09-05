@@ -6,13 +6,13 @@ RSpec.describe DailyMailer, type: :mailer do
     let(:mail) { DailyMailer.digest(user) }
 
     it "renders the headers" do
-      expect(mail.subject).to eq("Digest")
-      expect(mail.to).to eq(["to@example.org"])
+      expect(mail.subject).to eq("Questions asked by the last day")
+      expect(mail.to).to eq(user.email)#(["to@example.org"])
       expect(mail.from).to eq(["from@example.com"])
     end
 
     it "renders the body" do
-      expect(mail.body.encoded).to match("Hi")
+      expect(mail.body.encoded).to match("Notification! Questions list created by 24 hours")
     end
   end
 
