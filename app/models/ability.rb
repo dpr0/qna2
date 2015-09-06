@@ -33,6 +33,8 @@ class Ability
       answer.question.user == user && answer.user != user
     end
 
+    can [:create, :destroy], Subscription
+
     can :cancel, [Question, Answer] do |votable|
       user.voted_for?(votable)
     end

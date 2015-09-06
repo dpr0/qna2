@@ -9,7 +9,8 @@ class User < ActiveRecord::Base
   has_many :answers, dependent: :destroy
   has_many :votes, dependent: :destroy
   has_many :comments, dependent: :destroy
-  has_many :authorizations
+  has_many :authorizations, dependent: :destroy
+  has_many :subscriptions, dependent: :destroy
 
   def voted_for?(votable)
     votable.votes.find_by(user: self)
@@ -28,6 +29,15 @@ class User < ActiveRecord::Base
       user.create_authorization(auth)
     end
     user
+  end
+
+  def self.send_daily_digest
+    #all.each do |user|
+    find_each.each do |user|
+      DailyMailer.digest(user).deliver_later # _now
+      #DailyMailer.delay.digest(user)
+
+    end
   end
 
   def create_authorization(auth)

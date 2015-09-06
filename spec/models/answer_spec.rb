@@ -17,6 +17,18 @@ RSpec.describe Answer, type: :model do
   let(:votable) { create(:answer, question: question) }
   it_behaves_like "votable"
 
+  describe 'question subscribers notifications' do
+    subject { build(:answer) }
+    it 'should call notice job after create' do
+      expect(AnswerNoticeJob).to receive(:perform_later).with(subject)
+      subject.save!
+    end
+    it 'should not call notice job after update' do
+      subject.save!
+      expect(AnswerNoticeJob).to_not receive(:perform_later)
+      subject.touch
+   end
+  end
 
   describe "reputation" do
     let(:user) { create(:user) }
@@ -28,16 +40,7 @@ RSpec.describe Answer, type: :model do
       expect(subject.body).to eq "MyAnswer"
     end
 
-    it "should calculate reputation after create" do
-      expect(Reputation).to receive(:calculate).with(subject)
-      subject.save!
-    end
-
-    it "should not calculate reputation after update" do
-      subject.save!
-      expect(Reputation).to_not receive(:calculate)
-      subject.update(body: '123')
-    end
+    it_behaves_like 'calculates reputation'
   end
 
   describe 'best answer' do
