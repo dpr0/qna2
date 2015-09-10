@@ -1,0 +1,13 @@
+- unless @subscriptions.empty?
+  table class="table" id="subscriptions"
+    thead
+      tr
+        th subscription.id
+        th user.email
+        th question.id
+    tbody
+      - @subscriptions.each do |subs|
+        tr
+          td= subs.id
+          td= subs.user.email
+          td= subs.question.id

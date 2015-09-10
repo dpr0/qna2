@@ -13,8 +13,13 @@ class Answer < ActiveRecord::Base
 
   scope :firstbest, -> { order('best DESC, created_at') }
 
-  after_create :create_subscribe_for_author_of_amswer
-  after_create :update_reputation, :notice_subscribers
+  after_create do
+    update_reputation
+    AnswerNoticeJob.perform_later(self)
+    Subscription.find_or_initialize_by(user: self.user, question: self.question).save!
+  end
+
+  #after_create :update_reputation, :notice_subscribers
   #after_create :calculate_reputation
 
   def best_answer
@@ -23,15 +28,13 @@ class Answer < ActiveRecord::Base
     update_attributes(best: true)
   end
 
-  private
-
-  def notice_subscribers
-    AnswerNoticeJob.perform_later(self)
-  end
-
-  def create_subscribe_for_author_of_amswer
-    unless Subscription.where(user: self.user, question: self.question).first
-      Subscription.create(user: self.user, question: self.question)
-    end
-  end
+#  private
+#
+#  def notice_subscribers
+#    AnswerNoticeJob.perform_later(self)
+#  end
+#
+#  def create_subscribe_for_author_of_answer
+#    Subscription.find_or_initialize_by(user: self.user, question: self.question).save!
+#  end
 end

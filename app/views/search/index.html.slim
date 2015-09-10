@@ -1,0 +1,33 @@
+h1 Founded:
+-unless @result.empty?
+  table class="table" id="results"
+    thead
+      tr
+        th Type:
+        th Title:
+        th Создан:
+        th Изменен:
+        th Body:
+    tbody
+      - @result.each do |result|
+        tr
+          -if result.class.name=="Question"
+            td = result.class.name
+            td = link_to result.title, result
+            td = result.created_at.strftime("%d.%m.%Y")
+            td = result.updated_at.strftime("%d.%m.%Y")
+            td = result.body
+          -if result.class.name=="Answer"
+            td = result.class.name
+            td = link_to result.question.title, result
+            td = result.created_at.strftime("%d.%m.%Y")
+            td = result.updated_at.strftime("%d.%m.%Y")
+            td = result.body
+          -if result.class.name=="Comment"
+            td = result.class.name
+            td = link_to result.commentable.body, result.commentable
+            td = result.created_at.strftime("%d.%m.%Y")
+            td = result.updated_at.strftime("%d.%m.%Y")
+            td = result.body
+-else
+  i No matches!

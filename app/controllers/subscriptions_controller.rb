@@ -3,6 +3,10 @@ class SubscriptionsController < ApplicationController
   respond_to :js
   authorize_resource
 
+  def index
+    @subscriptions = Subscription.all
+  end
+
   def create
     @question = Question.find(params[:question_id])
     #respond_with(@subscription = Subscription.create(question: @question, user: current_user))
