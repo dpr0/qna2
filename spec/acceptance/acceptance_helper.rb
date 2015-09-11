@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.configure do |config|
   Capybara.javascript_driver = :webkit
-  config.include SphinxHelpers, type: :feature
+  #config.include SphinxHelpers, type: :feature
   config.include AcceptanceMacros, type: :feature
   config.use_transactional_fixtures = false
   config.include(OmniauthMacros)
@@ -10,8 +10,8 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
-    ThinkingSphinx::Test.init
-    ThinkingSphinx::Test.start_with_autostop
+    #ThinkingSphinx::Test.init
+    #ThinkingSphinx::Test.start_with_autostop
   end
   config.before(:each) do
     DatabaseCleaner.strategy = :transaction
@@ -21,7 +21,7 @@ RSpec.configure do |config|
   end
   config.before(:each) do
     DatabaseCleaner.start
-    index
+    #index
   end
   config.after(:each) do
     DatabaseCleaner.clean

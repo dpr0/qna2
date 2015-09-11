@@ -1,5 +1,5 @@
 class SearchController < ApplicationController
-  authorize_resource
+  authorize_resource class: User
 
   def index
     search = search_params[:where_search]
@@ -11,7 +11,9 @@ class SearchController < ApplicationController
     end
   end
 
+  private
+
   def search_params
-    params.permit(:where_search, :search_field, :commit)
+    params.permit(:where_search, :search_field)
   end
 end

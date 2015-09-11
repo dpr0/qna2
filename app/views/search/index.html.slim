@@ -19,7 +19,7 @@ h1 Founded:
             td = result.body
           -if result.class.name=="Answer"
             td = result.class.name
-            td = link_to result.question.title, result
+            td = link_to result.question.title, result.question
             td = result.created_at.strftime("%d.%m.%Y")
             td = result.updated_at.strftime("%d.%m.%Y")
             td = result.body
