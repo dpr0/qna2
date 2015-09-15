@@ -13,12 +13,9 @@ class Answer < ActiveRecord::Base
 
   scope :firstbest, -> { order('best DESC, created_at') }
 
-  after_create do
-    update_reputation
-    AnswerNoticeJob.perform_later(self)
-    Subscription.find_or_initialize_by(user: self.user, question: self.question).save!
-  end
-
+  after_create { update_reputation }
+  after_create { AnswerNoticeJob.perform_later(self) }
+  after_create { Subscription.find_or_initialize_by(user: self.user, question: self.question).save! }
   #after_create :update_reputation, :notice_subscribers
   #after_create :calculate_reputation
 

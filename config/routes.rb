@@ -1,7 +1,6 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  get 'search/index'
   resources :search, only: [:index]
 
   authenticate :user, lambda { |u| u.admin? } do 

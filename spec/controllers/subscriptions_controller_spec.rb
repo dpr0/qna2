@@ -8,7 +8,7 @@ RSpec.describe SubscriptionsController, type: :controller do
   #let(:subscription){ create(:subscription) }
 
   describe 'GET #index' do
-    get :index
+    #get :index
   end
 
   describe 'POST #create' do
