@@ -35,6 +35,8 @@ gem 'oj_mimic_json'
 gem 'sidekiq'
 gem 'sinatra', require: nil
 gem 'sidetiq'
+gem 'mysql2'
+gem 'thinking-sphinx'
 
 # gem 'activerecord-postgres-hstore'
 # gem 'bcrypt', '~> 3.1.7'           # Use ActiveModel has_secure_password

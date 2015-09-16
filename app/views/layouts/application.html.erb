@@ -16,6 +16,16 @@
         <%= link_to "Войти", new_user_session_path %> |
         <%= link_to "Регистрация", new_user_registration_path %> |
     <% end %>
+
+    <%= form_tag(search_index_path, method: "get", role:"form") do %>
+    <%= radio_button_tag 'where_search', 'Answer' %>             <%= label_tag("where_search", "Answers") %>
+    <%= radio_button_tag 'where_search', 'Question' %>           <%= label_tag("where_search", "Questions") %>
+    <%= radio_button_tag 'where_search', 'Comment' %>            <%= label_tag("where_search", "Comments") %>
+    <%= radio_button_tag 'where_search', 'All', checked: true %> <%= label_tag("where_search", "All") %>
+    <%= label_tag(:search_field, "Search:") %> <%= text_field_tag(:search_field) %>
+    <%= submit_tag("Search") %>
+     <% end %>
+
 <div class="alert alert-success" role="alert"><%= notice %></div>
 <div class="alert alert-danger" role="alert"><%= alert %></div>
 <%= yield %>

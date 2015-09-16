@@ -1,20 +1,25 @@
 require 'rails_helper'
 
 RSpec.describe SubscriptionsController, type: :controller do
-  let!(:user)         { create(:user) }
-  let!(:user2)        { create(:user) }
-  let!(:question)    { create(:question, user: user) }
-  let!(:subscription){ create(:subscription, user: user, question: question) }
+  let(:user)         { create(:user) }
+  let(:user2)        { create(:user) }
+  let(:question)    { create(:question, user: user) }
+  let(:question2)    { create(:question, user: user) }
+  #let(:subscription){ create(:subscription) }
+
+  describe 'GET #index' do
+    #get :index
+  end
 
   describe 'POST #create' do
     context 'with valid attributes' do
-      before { sign_in(user) }
+      before { sign_in(user2) }
       before { post :create, question_id: question, user_id: user, format: :js }
       it 'subscription assigns to user and question' do
         expect(assigns(:subscription).user_id).to eq subject.current_user.id
       end
       it 'save associated subscription' do
-        expect{ post :create, question_id: question, user_id: user2, format: :js }.to change(Subscription, :count).by(1)
+        expect { post :create, question_id: question2, user_id: user2, format: :js }.to change(Subscription, :count).by(2)
       end
       it 'render create template' do
         expect(response).to render_template :create
@@ -25,7 +30,7 @@ RSpec.describe SubscriptionsController, type: :controller do
   describe 'DELETE #destroy' do
     context 'with valid attributes' do
       it 'deletes answer' do
-        sign_in(user)
+        sign_in(user2)
         expect { delete :destroy, id: subscription, format: :js }.to change(Subscription, :count).by(-1)
       end
       it 'user cant delete another user answer' do
