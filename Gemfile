@@ -37,6 +37,7 @@ gem 'sinatra', require: nil
 gem 'sidetiq'
 gem 'mysql2'
 gem 'thinking-sphinx'
+gem 'riddle'
 
 # gem 'activerecord-postgres-hstore'
 # gem 'bcrypt', '~> 3.1.7'           # Use ActiveModel has_secure_password

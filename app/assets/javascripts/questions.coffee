@@ -10,3 +10,4 @@ $ ->
 
 jQuery ->
   $('#questions').DataTable()
+  $('#results').DataTable()
