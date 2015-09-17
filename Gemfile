@@ -32,7 +32,7 @@ gem 'oj'
 gem 'oj_mimic_json'
 #gem 'delayed_job_active_record'
 #gem 'whenever'
-gem 'sidekiq'
+gem 'sidekiq', '~> 3.4.2' 
 gem 'sinatra', require: nil
 gem 'sidetiq'
 gem 'mysql2'
@@ -42,7 +42,13 @@ gem 'riddle'
 # gem 'activerecord-postgres-hstore'
 # gem 'bcrypt', '~> 3.1.7'           # Use ActiveModel has_secure_password
 # gem 'unicorn'                      # Use Unicorn as the app server
-# gem 'capistrano-rails'             # Use Capistrano for deployment
+group :development do                # Use Capistrano for deployment
+  gem 'capistrano', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-rvm', require: false
+end
+
 group :development, :test do
   gem 'byebug'                       # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'web-console', '~> 2.0'        # Access an IRB console on exception pages or by using <%= console %> in views
