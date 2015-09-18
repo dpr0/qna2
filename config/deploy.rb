@@ -5,8 +5,8 @@ set :application, 'qna'
 set :repo_url, 'git@github.com:dimarikpro/qna2.git'
 set :deploy_to, '/home/deploy/qna'
 #set :deploy_user, 'deploy'
-set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml', 'config/private_pub.yml', '.env')
-set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
+set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/private_pub.yml', '.env') #, 'config/secrets.yml'
+set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system', 'public/uploads')
 
 namespace :deploy do
   task :restart do

@@ -22,8 +22,7 @@ role :web, %w{deploy@lensprice.ru}
 role :db,  %w{deploy@lensprice.ru}
 
 set :rails_env, :production
-
-
+set :stage, :production
 
 # Configuration
 # =============
