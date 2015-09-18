@@ -41,6 +41,7 @@ gem 'riddle'
 gem 'dotenv'
 gem 'dotenv-deployment', require: 'dotenv/deployment'
 
+
 # gem 'activerecord-postgres-hstore'
 # gem 'bcrypt', '~> 3.1.7'           # Use ActiveModel has_secure_password
 # gem 'unicorn'                      # Use Unicorn as the app server
