@@ -151,6 +151,8 @@ GEM
     dotenv (1.0.2)
     dotenv-deployment (0.3.0)
       dotenv (~> 1.0)
+    dotenv-rails (1.0.2)
+      dotenv (= 1.0.2)
     em-http-request (1.1.2)
       addressable (>= 2.3.4)
       cookiejar
@@ -474,8 +476,8 @@ DEPENDENCIES
   database_cleaner
   devise
   doorkeeper
-  dotenv
   dotenv-deployment
+  dotenv-rails
   email_spec
   factory_girl_rails
   handlebars_assets

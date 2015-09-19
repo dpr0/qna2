@@ -38,7 +38,7 @@ gem 'sidetiq'
 gem 'mysql2'
 gem 'thinking-sphinx'
 gem 'riddle'
-gem 'dotenv'
+gem 'dotenv-rails'
 gem 'dotenv-deployment', require: 'dotenv/deployment'
 
 
