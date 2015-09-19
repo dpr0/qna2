@@ -6,9 +6,9 @@ feature 'Create question', 'In order to get answer from community -  As an authe
   given!(:question2) { create(:question, user: user) }
   given!(:answer)    { create(:answer, user: user, question: question) }
   given!(:answer2)   { create(:answer, user: user, question: question2) }
-  #ThinkingSphinx::Test.init
-  #ThinkingSphinx::Test.start
-  #ThinkingSphinx::Test.index
+  ThinkingSphinx::Test.init
+  ThinkingSphinx::Test.start
+  ThinkingSphinx::Test.index
 
   scenario 'Authenticated user search', sphinx: true do
     ThinkingSphinx::Test.run do

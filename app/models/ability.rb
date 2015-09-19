@@ -23,8 +23,8 @@ class Ability
   def user_abilities
     guest_abilities
     can :manage, :profile
-    can :create, [Question, Answer, Comment]
-    can [:update, :edit, :destroy], [Question, Answer, Comment], user: user
+    can :create, [Question, Answer, Comment, Subscription]
+    can [:update, :edit, :destroy], [Question, Answer, Comment, Subscription], user: user
     can :index, User
     can :me, User, id: user.id
     can :destroy, Attach, attachable: { user: user }
@@ -33,7 +33,6 @@ class Ability
       answer.question.user == user && answer.user != user
     end
 
-    can [:create, :destroy], Subscription
 
     can :cancel, [Question, Answer] do |votable|
       user.voted_for?(votable)

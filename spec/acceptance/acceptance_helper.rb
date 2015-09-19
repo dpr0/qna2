@@ -10,8 +10,6 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
-    ThinkingSphinx::Test.init
-    ThinkingSphinx::Test.start_with_autostop
   end
   config.before(:each) do
     DatabaseCleaner.strategy = :transaction
@@ -21,7 +19,6 @@ RSpec.configure do |config|
   end
   config.before(:each) do
     DatabaseCleaner.start
-    index
   end
   config.after(:each) do
     DatabaseCleaner.clean

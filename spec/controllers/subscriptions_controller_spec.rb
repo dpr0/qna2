@@ -3,9 +3,9 @@ require 'rails_helper'
 RSpec.describe SubscriptionsController, type: :controller do
   let(:user)         { create(:user) }
   let(:user2)        { create(:user) }
-  let(:question)    { create(:question, user: user) }
+  let(:question)     { create(:question, user: user) }
   let(:question2)    { create(:question, user: user) }
-  #let(:subscription){ create(:subscription) }
+  let!(:subscription){ create(:subscription, user: user) }
 
   describe 'GET #index' do
     #get :index
@@ -30,7 +30,7 @@ RSpec.describe SubscriptionsController, type: :controller do
   describe 'DELETE #destroy' do
     context 'with valid attributes' do
       it 'deletes answer' do
-        sign_in(user2)
+        sign_in(user)
         expect { delete :destroy, id: subscription, format: :js }.to change(Subscription, :count).by(-1)
       end
       it 'user cant delete another user answer' do

@@ -10,6 +10,7 @@ class CommentsController < ApplicationController
   authorize_resource
 
   def update
+    #authorize! :update, @comment
     @comment.update(comment_params)
     respond_with @comment
   end

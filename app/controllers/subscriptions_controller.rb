@@ -1,5 +1,6 @@
 class SubscriptionsController < ApplicationController
   before_action :authenticate_user!
+  before_action :load_subscription, only: :destroy
   respond_to :js
   authorize_resource
 
@@ -14,9 +15,14 @@ class SubscriptionsController < ApplicationController
   end
 
   def destroy
-    @question = Question.find(params[:id])
-    @subscription = Subscription.where(user: current_user, question: @question).first
+    #@subscription = Subscription.where(user: current_user, question: @question).first
     respond_with (@subscription.destroy)
     #respond_with(@subscription = current_user.subscriptions.destroy(question: @question))
+  end
+
+  private
+
+  def load_subscription
+    @subscription = Subscription.find(params[:id])
   end
 end
