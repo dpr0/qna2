@@ -12,9 +12,10 @@
           th Голосов:
           th Действие:
       tbody
-        - @questions.each do |question|
-          tr class="question_#{question.id}"
-            = render 'questions_list', question: question
+        - cache collection_cache_key_for :question do
+          - @questions.each do |question|
+            tr class="question_#{question.id}"
+              = render 'questions_list', question: question
 - else
   h4 Еще нет вопросов
 = subscribe_to "/questions/new"

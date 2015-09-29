@@ -1,62 +1,63 @@
-.question data={question_id: "#{@question.id}"}
-  font color="green" Количество ответов: &nbsp
-  = @question.answers.count
-  br
-  font color="green" ID пользователя создавшего вопрос: &nbsp
-  = @question.user_id
-  br
-  font color="green" Создан/изменен: &nbsp
-  = @question.created_at.strftime("%d-%m-%y") + " / " + @question.updated_at.strftime("%d-%m-%y")
-  br
-  font color="blue" Вопрос №
-  = @question.id
-  |&nbsp;
-  font color="blue" Заголовок: &nbsp
-  = @question.title
-  |&nbsp;
-  = render 'subscriptions/button'
-  div class='votes_count'
-    font color="blue" Голосов:&nbsp
-    ="#{@question.votes.sum("score")} / #{@question.votes_count} "
-    - if can?( :cancel, @question )
-      = link_to("Cancel vote", cancel_question_path(@question), method: :post, remote: true, class: 'btn btn-danger btn-xs best-answer-link')
-    - if can?(:perfect, @question )
-      = link_to("Perfect", perfect_question_path(@question), method: :post, remote: true, class: 'btn btn-primary btn-xs best-answer-link')
-      i &nbsp;or&nbsp;
-    - if can?(:bullshit, @question )
-      = link_to("Bullshit", bullshit_question_path(@question), method: :post, remote: true, class: 'btn btn-primary btn-xs best-answer-link')
-  p
-    font color="blue" Содержание: &nbsp
-    = @question.body
-  - if can?(:edit, @question)
-    = link_to "Редактировать вопрос?", edit_question_path, class: 'btn btn-default btn-xs edit-question-link'
+- cache @question do
+  .question data={question_id: "#{@question.id}"}
+    font color="green" Количество ответов: &nbsp
+    = @question.answers.count
+    br
+    font color="green" ID пользователя создавшего вопрос: &nbsp
+    = @question.user_id
+    br
+    font color="green" Создан/изменен: &nbsp
+    = @question.created_at.strftime("%d-%m-%y") + " / " + @question.updated_at.strftime("%d-%m-%y")
+    br
+    font color="blue" Вопрос №
+    = @question.id
     |&nbsp;
-  - if can?(:destroy, @question)
-    = link_to "Del?", @question, method: :delete, data: {confirm: "Подтверждение удаления"}, class: 'btn btn-danger btn-xs'
-  p
-  font color="blue" Attachments: &nbsp
-  - @question.attaches.each do |a|
-    i id="attach_#{a.id}"
-      = link_to a.file.identifier, a.file.url
-      - if can?(:destroy, a)
-        = link_to "Удалить #{a.file.identifier}?", attach_path(a), method: :delete, class: 'btn btn-danger btn-xs', data: {confirm: "Подтверждение удаления"}, remote: true
-  p Комментарии:
-  .comments
-    = render 'comments/list', parent: @question
+    font color="blue" Заголовок: &nbsp
+    = @question.title
+    |&nbsp;
+    = render 'subscriptions/button'
+    div class='votes_count'
+      font color="blue" Голосов:&nbsp
+      ="#{@question.votes.sum("score")} / #{@question.votes_count} "
+      - if can?( :cancel, @question )
+        = link_to("Cancel vote", cancel_question_path(@question), method: :post, remote: true, class: 'btn btn-danger btn-xs best-answer-link')
+      - if can?(:perfect, @question )
+        = link_to("Perfect", perfect_question_path(@question), method: :post, remote: true, class: 'btn btn-primary btn-xs best-answer-link')
+        i &nbsp;or&nbsp;
+      - if can?(:bullshit, @question )
+        = link_to("Bullshit", bullshit_question_path(@question), method: :post, remote: true, class: 'btn btn-primary btn-xs best-answer-link')
+    p
+      font color="blue" Содержание: &nbsp
+      = @question.body
+    - if can?(:edit, @question)
+      = link_to "Редактировать вопрос?", edit_question_path, class: 'btn btn-default btn-xs edit-question-link'
+      |&nbsp;
+    - if can?(:destroy, @question)
+      = link_to "Del?", @question, method: :delete, data: {confirm: "Подтверждение удаления"}, class: 'btn btn-danger btn-xs'
+    p
+    font color="blue" Attachments: &nbsp
+    - @question.attaches.each do |a|
+      i id="attach_#{a.id}"
+        = link_to a.file.identifier, a.file.url
+        - if can?(:destroy, a)
+          = link_to "Удалить #{a.file.identifier}?", attach_path(a), method: :delete, class: 'btn btn-danger btn-xs', data: {confirm: "Подтверждение удаления"}, remote: true
+    p Комментарии:
+    .comments
+      = render 'comments/list', parent: @question
 
-.answers
-  = render @question.answers.firstbest
+  .answers
+    = render @question.answers.firstbest
 
-= form_for [@question, @answer], remote: true do |f| #, data: {type: :json} do |f|
-  .answer_text_body
-    = f.label :body, 'Your answer'
-    = f.text_area :body, size: "40"
-  .answer_attach
-    = f.fields_for :attaches, @answer.attaches.build do |a|
-      = render 'attach_fields', f: a
-      = link_to_add_association 'add file', f, :attaches
-  .answer_text_body
-    = f.submit 'Ответить'
+  = form_for [@question, @answer], remote: true do |f| #, data: {type: :json} do |f|
+    .answer_text_body
+      = f.label :body, 'Your answer'
+      = f.text_area :body, size: "40"
+    .answer_attach
+      = f.fields_for :attaches, @answer.attaches.build do |a|
+        = render 'attach_fields', f: a
+        = link_to_add_association 'add file', f, :attaches
+    .answer_text_body
+      = f.submit 'Ответить'
 .answer-errors
 .comments-errors
 
