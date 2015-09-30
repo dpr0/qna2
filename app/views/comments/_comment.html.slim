@@ -1,14 +1,15 @@
 - if comment.persisted?
-  = div_for comment do
-    font color="#CC0000"
-      b = comment.user_id
-    = comment.body
-    - if can?(:edit, comment)
-      = link_to 'Редактировать комментарий?', '', class: 'btn btn-default btn-xs edit-comment-link', data: { comment_id: comment.id }, remote: true
-    - if can?(:destroy, comment)
-      = link_to 'Del comment?', comment, method: :delete, class: 'btn btn-danger btn-xs', data: {confirm: "Подтверждение удаления"}, remote: true
-      = form_for comment, method: "patch", remote: true, html: { id: "edit-comment-#{comment.id}" } do |f|
-        .comment_text_body
-          = f.label :body, 'Текст комментария:'
-          = f.text_area :body, size: "30"
-          = f.submit 'Сохранить'
+  - cache comment do
+    = div_for comment do
+      font color="#CC0000"
+        b = comment.user_id
+      = comment.body
+      - if can?(:edit, comment)
+        = link_to 'Редактировать комментарий?', '', class: 'btn btn-default btn-xs edit-comment-link', data: { comment_id: comment.id }, remote: true
+      - if can?(:destroy, comment)
+        = link_to 'Del comment?', comment, method: :delete, class: 'btn btn-danger btn-xs', data: {confirm: "Подтверждение удаления"}, remote: true
+        = form_for comment, method: "patch", remote: true, html: { id: "edit-comment-#{comment.id}" } do |f|
+          .comment_text_body
+            = f.label :body, 'Текст комментария:'
+            = f.text_area :body, size: "30"
+            = f.submit 'Сохранить'
