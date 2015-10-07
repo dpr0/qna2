@@ -1,28 +1,32 @@
-== README
+Учебный проект в рамках курса "Профессиональная разработка на Ruby on Rails" - аналог сайта stackoverflow.com
+Возможности:
+Пользователь может:
+- зарегистрироваться/войти/выйти
+- просматривать список вопросов
+- задать вопрос
+- создать ответ на вопрос
+- отредактировать свой вопрос/ответ/комментраий
+- удалить свой вопрос/ответ/комментраий
+- добавить несколько файлов к вопросу/ответу
+- Автор вопроса может выбрать лучший ответ среди всех ответов к вопросу
+- добавить комментарий к вопросу/ответу
+- проголосовать за понравившийся вопрос/ответ
+- проголосовать против не понравившегося вопроса/ответа
+- Пользователь может просматривать вопросы в обратном хронологическом порядке/по популярности/по кол-ву просмотров
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+gem 'devise' 
+gem 'bootstrap'
+gem 'jquery-datatables-rails'
+gem 'carrierwave'
+gem 'remotipart'
+gem 'cocoon'
+gem 'private_pub'
+gem 'responders'
+gem 'omniauth'
+gem 'cancancan'
+gem 'doorkeeper'
+gem 'whenever'
+gem 'sidekiq'
+gem 'thinking-sphinx'
+gem 'unicorn'
+gem 'redis-rails'
